@@ -2,8 +2,35 @@
 
 {% block styles %}
 <style>
-    /* body {
-        background-image: hexagon;
+    #bg {
+        background-image: url("{{url_for('static', filename='main_bg.png')}}");
+        background-clip: border-box;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        
+        width: 100vw;
+        height: 100vh;
+    }
+
+    /* #main_bg_img {
+        width: 178vh;
+        height: 100vh;
+        object-fit: cover;         
+  	    object-position: 100% 0;  
+  	    object-position: 0 100%;
+    } */
+
+    /* #body {
+        position: relative;
+        width: 200px;
+        height: 100px;
+    }
+    #body::before {
+        position: absolute;
+        content: '';
+        z-index: -1;
+        background-image: url("{{url_for('static', filename='main_bg.png')}}");
     } */
 
     #login_box {
@@ -12,7 +39,7 @@
         border-color: rgb(92, 92, 92);
         border-width: thick;
 
-        background: #343434;
+        background: rgb(34, 34, 34);
         padding: 20px;
         width: 600px;
         height: 300px;
@@ -59,9 +86,11 @@
 {% endblock styles %}
 
 {% block body %}
-    <div class="container-fluid text-center">
-        <img src="{{url_for('static', filename='main_bg.png')}}" class="img-fluid" alt="Main Background Image">
+    <div class="containter-fluid" id="bg"></div>
+    <!-- <img src="{{url_for('static', filename='main_bg.png')}}" alt="Main Background Image" id="main_bg_img"> -->
+    <!-- <div class="container-fluid text-center row-xl-12 row-xxl-10">
+        <img src="{{url_for('static', filename='main_bg.png')}}" alt="Main Background Image" id="main_bg_img">
 
         <div class="container-md" id="login_box"></div>
-    </div>   
+    </div>    -->
 {% endblock body %}

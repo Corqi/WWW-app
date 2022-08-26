@@ -1,7 +1,67 @@
 {% extends "base.html" %}
 
+{% block styles %}
+<style>
+    /* body {
+        background-image: hexagon;
+    } */
+
+    #login_box {
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(92, 92, 92);
+        border-width: thick;
+
+        background: #343434;
+        padding: 20px;
+        width: 600px;
+        height: 300px;
+
+        position: absolute;
+        top: 50%;
+        bottom: 50%;
+        left: 0;
+        right: 0;
+    }
+
+    .hexagon {
+        background-image: none;
+        width: 100px;
+        height: 60px;
+        background: #9980fa;
+        position: relative;
+    }
+
+    .hexagon:before {
+        content: '';
+        position: absolute;
+        top: -30px;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-left: 50px solid transparent;
+        border-right: 50px solid transparent;
+        border-bottom: 30px solid #9980FA;
+    }
+
+    .hexagon:after {
+        content: '';
+        position: absolute;
+        bottom: -30px;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-left: 50px solid transparent;
+        border-right: 50px solid transparent;
+        border-top: 30px solid #9980FA;
+    }
+</style>
+{% endblock styles %}
+
 {% block body %}
     <div class="container-fluid text-center">
-        <img src="{{url_for('static', filename='main_bg.png')}}" class="img-fluid" alt="Responsive image">
-    </div>
+        <img src="{{url_for('static', filename='main_bg.png')}}" class="img-fluid" alt="Main Background Image">
+
+        <div class="container-md" id="login_box"></div>
+    </div>   
 {% endblock body %}

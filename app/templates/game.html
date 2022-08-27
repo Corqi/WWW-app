@@ -1,5 +1,66 @@
 {% extends "base.html" %}
 
+{% block styles %}
+<style>
+    #bg {
+        background-image: url("{{url_for('static', filename='bar_bg.png')}}");
+        background-clip: border-box;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        
+        width: 100vw;
+        height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #containerNavbar{
+        background-color: rgb(34, 34, 34);
+        margin-left: 0;
+        height: 100%;
+        width: 200px;
+
+        border-right: solid;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+    }
+
+    #navbarButtons{
+        height: 100%;
+    }
+
+    .nav-item{
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn{
+        margin-top: 30px;
+        width: 150px;
+    }
+</style>
+{% endblock styles %}
+
 {% block body %}
-    <p1>We're gaming boiii</p1>
+<div class="containter-fluid" id="bg">
+    <div class="container" id="containerNavbar">
+        <ul class="nav flex-column" id="navbarButtons">
+            <li class="nav-item">
+                <button type="button" class="btn btn-secondary">Character</button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="btn btn-secondary">Shop</button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="btn btn-secondary">Canteen</button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="btn btn-secondary" id="buttonLogout">Logout</button>
+            </li>
+        </ul>
+    </div>
+</div>
 {% endblock body %}

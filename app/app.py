@@ -23,8 +23,8 @@ def create_app():
     db.init_app(app)
 
     # Register blueprints (views)
-    from .views.default import bp as bp_default
-    app.register_blueprint(bp_default)
+    from .views.auth import bp as bp_auth
+    app.register_blueprint(bp_auth)
 
     from .views.game import bp as bp_game
     app.register_blueprint(bp_game)

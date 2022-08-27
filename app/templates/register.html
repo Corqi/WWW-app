@@ -1,0 +1,41 @@
+{% extends "auth.html" %}
+
+{% block styles %}
+{{ super() }}
+<style>
+    #buttonRegister {
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        display:block;
+
+        width: 100%;
+        max-width: 200px;
+    }
+
+    #linkLogin{
+        text-align: center;
+        margin: 0;
+    }
+</style>
+{% endblock styles %}
+
+{% block form %}
+<form action="#" method="post">
+    <label class="col-form-label" for="inputNickname">Nickname</label>
+    <input type="email" class="form-control" placeholder="Nickname" id="inputNickname">
+
+    <label class="col-form-label" for="inputEmail">Email</label>
+    <input type="email" class="form-control" placeholder="Email@example.com" id="inputEmail">
+
+    <label class="col-form-label" for="inputPassword">Password</label>
+    <input type="password" class="form-control" placeholder="Password" id="inputPassword">
+
+    <button type="submit" class="btn btn-primary" id="buttonRegister">Sign Up</button>
+
+    <p id="linkLogin">
+        Already Have an Account?
+        <a href="/">Sign in</a>
+    </p>
+</form>
+{% endblock form %}

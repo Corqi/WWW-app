@@ -41,10 +41,10 @@
 
         background: rgb(34, 34, 34);
         padding: 20px;
-        width: 600px;
-        height: 300px;
+        width: 30%;
+        height: 25%;
 
-        position: absolute;
+        position: relative;
         top: 50%;
         bottom: 50%;
         left: 0;
@@ -86,11 +86,9 @@
 {% endblock styles %}
 
 {% block body %}
-    <div class="containter-fluid" id="bg"></div>
-    <!-- <img src="{{url_for('static', filename='main_bg.png')}}" alt="Main Background Image" id="main_bg_img"> -->
-    <!-- <div class="container-fluid text-center row-xl-12 row-xxl-10">
-        <img src="{{url_for('static', filename='main_bg.png')}}" alt="Main Background Image" id="main_bg_img">
-
-        <div class="container-md" id="login_box"></div>
-    </div>    -->
+    <div class="containter-fluid" id="bg">
+        <div class="container-sm" id="login_box">
+            
+        </div>
+    </div>
 {% endblock body %}

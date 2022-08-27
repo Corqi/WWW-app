@@ -36,7 +36,8 @@
     #login_box {
         border-style: solid;
         border-radius: 25px;
-        border-color: rgb(92, 92, 92);
+        border-color: rgb(39, 48, 57);
+        /* border-color: rgb(92, 92, 92); */
         border-width: thick;
 
         background: rgb(34, 34, 34);
@@ -88,7 +89,15 @@
 {% block body %}
     <div class="containter-fluid" id="bg">
         <div class="container-sm" id="login_box">
-            
+            <label class="col-form-label" for="inputEmail">Email</label>
+            <input type="text" class="form-control" placeholder="email@example.com" id="inputEmail">
+
+            <label class="col-form-label" for="inputPassword">Password</label>
+            <input type="text" class="form-control" placeholder="password" id="inputPassword">
+
+            <button type="submit" class="btn btn-primary">Login</button>
+
+            <button type="submit" class="btn btn-primary">Register</button>
         </div>
     </div>
 {% endblock body %}

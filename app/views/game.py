@@ -4,7 +4,7 @@ from ..models import Message
 bp = Blueprint('bp_game', __name__)
 
 @bp.route('/game')
-def default_get():
+def game_get():
     return render_template('game.html')
 
 # Get list of messages

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<style>
+    #bg {
+        background-image: url("{{url_for('static', filename='main_bg.png')}}");
+        background-clip: border-box;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        
+        width: 100vw;
+        height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #loginBox {
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        /* border-color: rgb(92, 92, 92); */
+        border-width: thick;
+
+        background: rgb(34, 34, 34);
+        padding: 20px;
+        width: 30%;
+        min-width: 250px;
+        height: auto;
+    }
+</style>
+{% endblock styles %}
+
+{% block body %}
+<div class="containter-fluid" id="bg">
+    <div class="container-sm" id="loginBox">
+        {% block form %}
+        {% endblock form %}
+    </div>
+</div>
+{% endblock body %}

@@ -28,6 +28,29 @@
         border-width: thick;
     }
 
+    #containerCenter{
+        background-color: rgb(34, 34, 34);
+        width: 50vw;
+
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+    }
+
+    #containerChat{
+        background-color: rgb(34, 34, 34);
+        width: 16vw;
+        height: 30vh;
+
+        overflow: auto;
+
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+    }
+
     #navbarButtons{
         height: 100%;
     }
@@ -49,7 +72,9 @@
     <div class="container" id="containerNavbar">
         <ul class="nav flex-column" id="navbarButtons">
             <li class="nav-item">
-                <button type="button" class="btn btn-secondary">Character</button>
+                <a href="{{ url_for('bp_game.character_get') }}">
+                    <button type="button" class="btn btn-secondary">Character</button>
+                </a>
             </li>
             <li class="nav-item">
                 <button type="button" class="btn btn-secondary">Shop</button>
@@ -62,5 +87,16 @@
             </li>
         </ul>
     </div>
+
+    {% block chatBox %}
+        <div class="containter-fluid">
+            <div class="container" id="containerChat">
+
+            </div>
+        </div>
+    {% endblock chatBox %}
+
+    {% block center %}
+    {% endblock center %}
 </div>
 {% endblock body %}

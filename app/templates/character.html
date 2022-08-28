@@ -1,0 +1,13 @@
+{% extends "game.html" %}
+
+{% block center %}
+    <div class="container-sm" id="containerCenter">
+        <p>Name: {{ character.name }}</p>
+        <p>Level: {{ character.level }}</p>
+        <p>Health: {{ character.currentHealth }}/{{ character.maxHealth }}</p>
+        <p>Money: {{ character.money }}</p>
+        <p>Speed: {{ character.speed }}</p>
+        <p>Armor: {{ character.armor }}</p>
+        <p>Luck: {{ character.luck }}</p>
+    </div>
+{% endblock center %}

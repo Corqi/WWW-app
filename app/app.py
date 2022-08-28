@@ -22,12 +22,25 @@ def create_app():
                                              f"@{app.config['DB_HOST']}/{app.config['DB_NAME']}")
     db.init_app(app)
 
+    from .models import User
+    with app.app_context():
+        db.create_all()
+        db.session.commit()
+        # admin = User('adminsds', 'admssin@edxample.com')
+        # db.session.add(admin)
+        # db.session.commit()
+        users = User.query.all()
+        print(users)
+
     # Register blueprints (views)
     from .views.auth import bp as bp_auth
     app.register_blueprint(bp_auth)
 
     from .views.game import bp as bp_game
     app.register_blueprint(bp_game)
+
+    from .views.chat import bp as bp_chat
+    app.register_blueprint(bp_chat)
 
 
     # for localhost only

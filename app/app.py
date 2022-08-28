@@ -2,6 +2,7 @@ from flask import Flask
 from werkzeug.debug import DebuggedApplication
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
 
 def create_app():
@@ -22,6 +23,20 @@ def create_app():
                                              f"@{app.config['DB_HOST']}/{app.config['DB_NAME']}")
     db.init_app(app)
 
+
+    from .models import User
+
+
+    with app.app_context():
+        db.create_all()
+        db.session.commit()
+        # admin = User('adminsds', 'admssin@edxample.com')
+        # db.session.add(admin)
+        # db.session.commit()
+        users = User.query.all()
+        print(users)
+
+
     # Register blueprints (views)
     from .views.default import bp as bp_default
     app.register_blueprint(bp_default)
@@ -32,3 +47,4 @@ def create_app():
 
     # for localhost only
     app.run()
+

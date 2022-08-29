@@ -21,6 +21,8 @@ class User(db.Model):
         self.password = password
         self.name = name
 
+from flask_login import UserMixin
+from .app import db
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -21,21 +21,28 @@
 {% endblock styles %}
 
 {% block form %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="alert alert-danger" role="alert">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
 <form action="#" method="post">
     <label class="col-form-label" for="inputNickname">Nickname</label>
-    <input type="email" class="form-control" placeholder="Nickname" id="inputNickname">
+    <input type="text" class="form-control" placeholder="Nickname" id="inputNickname" name="name">
 
     <label class="col-form-label" for="inputEmail">Email</label>
-    <input type="email" class="form-control" placeholder="Email@example.com" id="inputEmail">
+    <input type="email" class="form-control" placeholder="Email@example.com" id="inputEmail" name="email">
 
     <label class="col-form-label" for="inputPassword">Password</label>
-    <input type="password" class="form-control" placeholder="Password" id="inputPassword">
+    <input type="password" class="form-control" placeholder="Password" id="inputPassword" name="password">
 
     <button type="submit" class="btn btn-primary" id="buttonRegister">Sign Up</button>
 
     <p id="linkLogin">
         Already Have an Account?
-        <a href="/">Sign in</a>
+        <a href="{{ url_for('bp_auth.login_get') }}">Sign in</a>
     </p>
 </form>
 {% endblock form %}

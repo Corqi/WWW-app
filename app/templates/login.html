@@ -23,18 +23,34 @@
 {% endblock styles %}
 
 {% block form %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <div class="{% if category == "info"%} alert alert-success {% else %} alert alert-danger {% endif %}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
 <form action="#" method="post">
     <label class="col-form-label" for="inputEmail">Email</label>
-    <input type="email" class="form-control" placeholder="Email@example.com" id="inputEmail">
+    <input type="email" class="form-control" placeholder="Email@example.com" id="inputEmail" name="email">
 
     <label class="col-form-label" for="inputPassword">Password</label>
-    <input type="password" class="form-control" placeholder="Password" id="inputPassword">
+    <input type="password" class="form-control" placeholder="Password" id="inputPassword" name="password">
+
+    <div class="field">
+        <label class="checkbox">
+            <input type="checkbox" name="remember">
+            Remember me
+        </label>
+    </div>
 
     <button type="submit" class="btn btn-primary" id="buttonLogin">Sign In</button>
 
     <p id="linkRegister">
         Don't Have an Account?
-        <a href="/register">Sign up</a>
+        <a href="{{ url_for('bp_auth.register_get') }}">Sign up</a>
     </p>
 </form>
 {% endblock form %}

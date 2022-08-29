@@ -3,15 +3,28 @@
 {% block styles %}
 {{ super() }}
 <style>
-
     #settingsBox{
-        width: 50%;
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+
+        background: rgb(34, 34, 34);
         padding: 20px;
+        width: 50%;
         min-width: 250px;
         height: auto;
-
     }
 
+    #buttonSubmit{
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        display:block;
+
+        width: 100%;
+        max-width: 200px;
+    }
 </style>
 {% endblock styles %}
 

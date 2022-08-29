@@ -31,6 +31,8 @@
 
     #navbarButtons{
         height: 100%;
+
+        min-height: 300px;
     }
 
     #content{
@@ -64,6 +66,9 @@
             </li>
             <li class="nav-item">
                 <button type="button" class="btn btn-secondary">Canteen</button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="btn btn-secondary">Settings</button>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('bp_auth.logout_get') }}">

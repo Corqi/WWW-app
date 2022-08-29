@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash,
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user
 
+import re
+
 from ..app import db
 from ..models import User
 
@@ -22,7 +24,6 @@ def login_post():
     email = request.form.get('email')
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
-    remember = False
 
     user = User.query.filter_by(email=email).first()
 
@@ -59,14 +60,20 @@ def register_post():
         flash('The data provided is incorrect', 'error')
         return redirect(url_for('bp_auth.register_get'))
 
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        flash('The e-mail is incorrect', 'error')
+        return redirect(url_for('bp_auth.register_get'))
+
     user = User.query.filter_by(email=email).first()
 
     if user:
-        flash(Markup(f'Email address already exists. Go to <a href="{url_for("bp_auth.login_get")}">login page</a>.'), 'error')
+        flash(Markup(f'Email address already exists. Go to <a href="{url_for("bp_auth.login_get")}">login page</a>.'),
+              'error')
         return redirect(url_for('bp_auth.register_get'))
 
     new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
     db.session.add(new_user)
     db.session.commit()
 
+    flash('Your account has been created you can now log in', 'info')
     return redirect(url_for('bp_auth.login_get'))

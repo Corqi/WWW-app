@@ -13,13 +13,14 @@
         height: 100vh;
 
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
     }
 
     #containerNavbar{
         background-color: rgb(34, 34, 34);
         margin-left: 0;
+        margin-right: 0;
         height: 100%;
         width: 200px;
 
@@ -30,6 +31,13 @@
 
     #navbarButtons{
         height: 100%;
+    }
+
+    #content{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .nav-item{
@@ -64,5 +72,12 @@
             </li>
         </ul>
     </div>
+
+    <div class="container" id="content">
+        {% block content %}
+
+        {% endblock content %}
+    </div>
 </div>
+
 {% endblock body %}

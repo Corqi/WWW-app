@@ -8,6 +8,11 @@ bp = Blueprint('bp_game', __name__)
 def game_get():
     return render_template('game.html')
 
+@bp.route('/settings')
+@login_required
+def settings_get():
+    return render_template('settings.html')
+
 # Get list of messages
 @bp.route('/game/s', methods=['GET'])
 @login_required

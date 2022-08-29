@@ -1,0 +1,37 @@
+{% extends "game.html" %}
+
+{% block styles %}
+{{ super() }}
+<style>
+
+    #settingsBox{
+        width: 50%;
+        padding: 20px;
+        min-width: 250px;
+        height: auto;
+
+    }
+
+</style>
+{% endblock styles %}
+
+{% block content %}
+<div class="card" id="settingsBox">
+    <div class="card-body">
+        <h5 class="card-title">Settings</h5>
+
+        <form action="#" method="post">
+            <label class="col-form-label" for="inputNickname">Nickname</label>
+            <input type="text" class="form-control" placeholder="Nickname" id="inputNickname" name="name">
+
+            <label class="col-form-label" for="inputEmail">Email</label>
+            <input type="email" class="form-control" placeholder="Email@example.com" id="inputEmail" name="email">
+
+            <label class="col-form-label" for="inputPassword">Password</label>
+            <input type="password" class="form-control" placeholder="Password" id="inputPassword" name="password">
+
+            <button type="submit" class="btn btn-primary" id="buttonSubmit">Change</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

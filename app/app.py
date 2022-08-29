@@ -1,9 +1,10 @@
 from flask import Flask
 from werkzeug.debug import DebuggedApplication
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_login import LoginManager
 
 db = SQLAlchemy()
+
 
 def create_app():
     # Create and configure the app
@@ -23,19 +24,19 @@ def create_app():
                                              f"@{app.config['DB_HOST']}/{app.config['DB_NAME']}")
     db.init_app(app)
 
+    login_manager = LoginManager()
+    login_manager.login_view = 'bp_auth.login_get'
+    login_manager.init_app(app)
 
     from .models import User
 
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
     with app.app_context():
         db.create_all()
         db.session.commit()
-        # admin = User('adminsds', 'admssin@edxample.com')
-        # db.session.add(admin)
-        # db.session.commit()
-        users = User.query.all()
-        print(users)
-
 
     # Register blueprints (views)
     from .views.auth import bp as bp_auth
@@ -43,7 +44,6 @@ def create_app():
 
     from .views.game import bp as bp_game
     app.register_blueprint(bp_game)
-
 
     # for localhost only
     app.run()

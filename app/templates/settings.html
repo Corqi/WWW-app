@@ -21,16 +21,19 @@
         <h5 class="card-title">Settings</h5>
 
         <form action="#" method="post">
-            <label class="col-form-label" for="inputNickname">Nickname</label>
+            <label class="col-form-label" for="inputNickname">Current nickname: <b>{{ current_user.name }}</b></label>
             <input type="text" class="form-control" placeholder="Nickname" id="inputNickname" name="name">
-
-            <label class="col-form-label" for="inputEmail">Email</label>
+            <button type="submit" class="btn btn-primary" id="buttonChangeNickname">Change nickname</button>
+        </form>
+        <form action="#" method="post">
+            <label class="col-form-label" for="inputEmail">Current e-mail: <b>{{ current_user.email }}</b></label>
             <input type="email" class="form-control" placeholder="Email@example.com" id="inputEmail" name="email">
-
+            <button type="submit" class="btn btn-primary" id="buttonChangeEmail">Change email</button>
+        </form>
+        <form action="#" method="post">
             <label class="col-form-label" for="inputPassword">Password</label>
             <input type="password" class="form-control" placeholder="Password" id="inputPassword" name="password">
-
-            <button type="submit" class="btn btn-primary" id="buttonSubmit">Change</button>
+            <button type="submit" class="btn btn-primary" id="buttonChangePassword">Change password</button>
         </form>
     </div>
 </div>

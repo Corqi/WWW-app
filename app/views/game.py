@@ -11,7 +11,7 @@ def game_get():
 @bp.route('/settings')
 @login_required
 def settings_get():
-    return render_template('settings.html')
+    return render_template('settings.html', current_user=current_user)
 
 # Get list of messages
 @bp.route('/game/s', methods=['GET'])

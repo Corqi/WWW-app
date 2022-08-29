@@ -41,16 +41,19 @@
     }
 
     #containerChat{
+        margin-left: 0;
         background-color: rgb(34, 34, 34);
-        width: 16vw;
-        height: 30vh;
-
-        overflow: auto;
+        width: 500px;
 
         border-style: solid;
         border-radius: 25px;
         border-color: rgb(39, 48, 57);
         border-width: thick;
+    }
+
+    #messagesWindow{
+        height: 30vh;
+        overflow: auto;
     }
 
     #navbarButtons{
@@ -80,6 +83,10 @@
 {% endblock styles %}
 
 {% block body %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+
 <div class="containter-fluid" id="bg">
     <div class="container" id="containerNavbar">
         <ul class="nav flex-column" id="navbarButtons">
@@ -114,7 +121,13 @@
     {% block chatBox %}
         <div class="containter-fluid">
             <div class="container" id="containerChat">
+                <div class="container" id="messagesWindow">
 
+                </div>
+                <div>
+                    <input type="text" id="message-input" class="form-control" maxlength="500">
+                    <button id="send-button" onclick="addMessage();">Send</button>
+                </div>
             </div>
         </div>
     {% endblock chatBox %}
@@ -122,5 +135,83 @@
     {% block center %}
     {% endblock center %}
 </div>
+
+    <script>
+    var currentUserID = {{ current_user.id }};
+    var lastMessageID = null;
+    const messagesWindow = document.getElementById('messagesWindow');
+
+    {% raw %}
+
+    var loadMessagesTimeout = null;
+
+    function loadMessages() {
+        clearTimeout(loadMessagesTimeout);
+
+        $.ajax({
+            url: "/chat",
+            type: "GET",
+            dataType: "json",
+            data: {
+                'message_id': lastMessageID
+            },
+        })
+        .done(function( data ) {
+            jQuery.each(data, function() {
+                lastMessageID = this.id;
+                appendMessageToChatWindow(
+                    this.id,
+                    this.username,
+                    this.content,
+                    this.created_at,
+                    (currentUserID == this.user_id ? true : false)
+                )
+                $('#messagesWindow').scrollTop($('#messagesWindow')[0].scrollHeight);
+            });
+            loadMessagesTimeout = setTimeout(loadMessages, 10000);
+        })
+        .fail(function( xhr, status, errorThrown ) {
+            alert("Cannot load messages.");
+        });
+    }
+
+    function appendMessageToChatWindow(messageID, username, content, created_at){
+        $('#messagesWindow').append(`<div id="message-${messageID}">
+                                    <p>[${created_at}]: ${username}: ${content}</p>
+                                  </div>`)
+    }
+
+    function addMessage() {
+        let content = $('#message-input').val();
+        if (content) {
+            console.log(`Adding message: ${content}`);
+        } else {
+            alert("No message given.");
+            return false;
+        }
+
+        $.ajax({
+            url: "/chat",
+            type: "POST",
+            data: JSON.stringify({
+                'content': content
+            }),
+            contentType: "application/json",
+        })
+        .done(function( data ) {
+            $('#message-input').val('');
+            loadMessages();
+        })
+        .fail(function( xhr, status, errorThrown ) {
+            alert("Cannot add message.");
+        });
+    }
+
+    $().ready(function() {
+        loadMessages();
+    });
+
+  {% endraw %}
+  </script>
 
 {% endblock body %}

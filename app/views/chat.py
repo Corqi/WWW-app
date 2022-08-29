@@ -1,17 +1,14 @@
-from flask import Blueprint, render_template, request, jsonify
-from ..models import User, Message
+from flask import Blueprint, request, jsonify
+from ..models import Message
 from ..app import db
-# from flask_security import login_required
+from flask_login import login_required, current_user
 
 bp = Blueprint('bp_chat', __name__)
 
 
 @bp.route('/chat', methods=['GET'])
+@login_required
 def chat_messages_get():
-    obj = Message(user_id=1, content="lalala")
-    db.session.add(obj)
-    db.session.commit()
-
     try:
         message_id = int(request.args.get('message_id'))
     except (ValueError, TypeError):
@@ -36,3 +33,17 @@ def chat_messages_get():
             'created_at': msg.created_at
         })
     return jsonify(results)
+
+
+@bp.route('/chat', methods=['POST'])
+@login_required
+def chat_messages_post():
+        data = request.get_json(force=True)
+
+        if 'content' in data and len(data['content']) >= 1 and len(data['content']) <= 500:
+            obj = Message(user_id=current_user.id, content=data['content'])
+            db.session.add(obj)
+            db.session.commit()
+            return '', 204
+        else:
+            return 'Content is incorrect or was not given.', 400

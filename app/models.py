@@ -1,8 +1,9 @@
 from .app import db
 import datetime
+from flask_login import UserMixin
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
@@ -21,8 +22,6 @@ class User(db.Model):
         self.password = password
         self.name = name
 
-from flask_login import UserMixin
-from .app import db
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)

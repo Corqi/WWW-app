@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, Markup
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user
 
@@ -27,7 +27,7 @@ def login_post():
     user = User.query.filter_by(email=email).first()
 
     if not user or not check_password_hash(user.password, password):
-        flash('Please check your login details and try again.')
+        flash('Please check your login details and try again.', 'error')
         return redirect(url_for('bp_auth.login_get'))
 
     login_user(user, remember=remember)
@@ -37,7 +37,7 @@ def login_post():
 @bp.route('/logout')
 def logout_get():
     logout_user()
-    flash("You've been successfully logged out.")
+    flash("You've been successfully logged out.", 'info')
     return redirect(url_for('bp_auth.login_get'))
 
 
@@ -55,10 +55,14 @@ def register_post():
     name = request.form.get('name')
     password = request.form.get('password')
 
+    if email == "" or name == "" or password == "":
+        flash('The data provided is incorrect', 'error')
+        return redirect(url_for('bp_auth.register_get'))
+
     user = User.query.filter_by(email=email).first()
 
     if user:
-        flash('Email address already exists')
+        flash(Markup(f'Email address already exists. Go to <a href="{url_for("bp_auth.login_get")}">login page</a>.'), 'error')
         return redirect(url_for('bp_auth.register_get'))
 
     new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))

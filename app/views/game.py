@@ -64,6 +64,11 @@ def settings_post():
         flash(f'The password you entered is incorrect', 'password_error')
         return redirect(url_for('bp_game.settings_get'))
 
+@bp.route('/shop')
+@login_required
+def shop_get():
+    return render_template('shop.html')
+
 
 # Get list of messages
 @bp.route('/game/s', methods=['GET'])

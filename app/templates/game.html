@@ -3,6 +3,7 @@
 {% block styles %}
 <style>
     #bg {
+        /* default bg that will be overwritten */
         background-image: url("{{url_for('static', filename='bar_bg.png')}}");
         background-clip: border-box;
         background-repeat: no-repeat;
@@ -40,6 +41,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 0;
     }
 
     .nav-item{
@@ -78,7 +80,7 @@
         </ul>
     </div>
 
-    <div class="container" id="content">
+    <div class="container-fluid" id="content">
         {% block content %}
 
         {% endblock content %}

@@ -1,0 +1,38 @@
+{% extends "game.html" %}
+
+{% block styles %}
+{{ super() }}
+<style>
+    /* overwrite default bg */
+    #bg{
+        background-image: url("{{url_for('static', filename='shop_bg.png')}}");
+    }
+
+    #shopBox{
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+
+        background: rgb(34, 34, 34);
+        padding: 20px;
+        width: 50%;
+        min-width: 250px;
+        height: auto;
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<div class="container" id="shopBox">
+    <form action="#" method="post">
+        <button type="submit" class="btn btn-primary" id="buttonBuyHealth">Heal me</button>
+
+        <button type="submit" class="btn btn-primary" id="buttonBuySpeed">Upgrade my weapon</button>
+
+        <button type="submit" class="btn btn-primary" id="buttonBuyArmor">Upgrade my armor</button>
+
+        <button type="submit" class="btn btn-primary" id="buttonBuyLuck">Upgrade my ship</button>
+    </form>
+</div>
+{% endblock content %}

@@ -70,6 +70,10 @@ def settings_post():
 def shop_get():
     return render_template('shop.html')
 
+@bp.route('/bar')
+@login_required
+def bar_get():
+    return render_template('bar.html')
 
 @bp.route('/game/character')
 @login_required

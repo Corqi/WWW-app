@@ -16,55 +16,127 @@
 
         background: rgb(34, 34, 34);
         padding: 20px;
-        width: 50%;
+        width: 70%;
         min-width: 250px;
         height: auto;
     }
 
-    #buttonBuyHealth{
-        margin-top: 0;
-    }
-
-    #formShop{
-        text-align: center;
-    }
-
     #image{
-        height: 100%;
+        height: 80%;
         padding: 0;
 
-        display: flex;
-        align-items: flex-end;
+        margin-top: auto;
+        margin-bottom: 0;
+        overflow: hidden;
     }
 
     #spriteShopkeeper{
-        width: 100%;
+        width: auto;
         height: auto;
+
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    #shopkeeperMessage{
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+
+        background: rgb(255, 255, 255);
+        padding: 20px;
+        width: 50%;
+        min-width: 250px;
+        height: 20%;
         
+        margin-left: auto;
+        margin-right: auto;
+
+        align-content: center;
+    }
+
+    #leftShopBox{
+        height: 100%;
+        text-align: center;
+        padding-top: 2%;
+    }
+
+    .shopButtons{
+        align-content: center;
+    }
+
+    .textShop{
+        text-align:center;
+        margin: auto;
+    }
+
+    .btn-primary{
+        margin: 10px;
+    }
+
+    p{
+        margin-bottom: 0;
     }
 </style>
 {% endblock styles %}
 
 {% block content %}
-<div class="container col-6" id="image">
-    <img src="{{url_for('static', filename='shopkeeper.png')}}" alt="Shopkeeper" id="spriteShopkeeper">
+<div class="container col-6" id="leftShopBox">
+    <div class="row" id="shopkeeperMessage">
+        <h1 class="text-secondary"><b>I hate css man...</b></h1>
+    </div>
+    <div class="row" id="image">
+        <img src="{{url_for('static', filename='shopkeeper.png')}}" alt="Shopkeeper" id="spriteShopkeeper">
+    </div>
 </div>
 
 <div class="container col-6">
     <div class="container" id="shopBox">
-        <form action="#" method="post" id="formShop">
-            <button type="submit" class="btn btn-primary" id="buttonBuyHealth">Heal me</button>
-            <br>
+        <div class="row">
+            <div class="container col-6"> 
+                <p>100/100hp</p>
+            </div>
+            <div class="container col-6"> 
+                <p>2137$</p>
+            </div>         
+        </div> 
 
-            <button type="submit" class="btn btn-primary" id="buttonBuySpeed">Upgrade my weapon</button>
-            <br>
+        <div class="row">
+            <div class="container col-6 shopButtons"> 
+                <button type="submit" class="btn btn-primary" id="buttonBuyHealth">Heal me</button>
+            </div>
+            <div class="container col-6 textShop"> 
+                <p>0$</p>
+            </div>         
+        </div> 
+        
+        <div class="row">
+            <div class="container col-6 shopButtons"> 
+                <button type="submit" class="btn btn-primary" id="buttonBuySpeed">Upgrade my weapon</button>
+            </div>
+            <div class="container col-6 textShop"> 
+                <p>0$</p>
+            </div>         
+        </div> 
 
-            <button type="submit" class="btn btn-primary" id="buttonBuyArmor">Upgrade my armor</button>
-            <br>
+        <div class="row">
+            <div class="container col-6 shopButtons"> 
+                <button type="submit" class="btn btn-primary" id="buttonBuyArmor">Upgrade my armor</button>
+            </div>
+            <div class="container col-6 textShop"> 
+                <p>0$</p>
+            </div>         
+        </div> 
 
-            <button type="submit" class="btn btn-primary" id="buttonBuyLuck">Upgrade my ship</button>
-            <br>
-        </form>
+        <div class="row">
+            <div class="container col-6 shopButtons"> 
+                <button type="submit" class="btn btn-primary" id="buttonBuyLuck">Upgrade my ship</button>
+            </div>
+            <div class="container col-6 textShop"> 
+                <p>0$</p>
+            </div>         
+        </div>      
     </div>
 </div>
 {% endblock content %}

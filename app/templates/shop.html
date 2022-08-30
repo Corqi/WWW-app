@@ -21,36 +21,50 @@
         height: auto;
     }
 
+    #buttonBuyHealth{
+        margin-top: 0;
+    }
+
+    #formShop{
+        text-align: center;
+    }
+
     #image{
-        margin-bottom: 55px;
+        height: 100%;
+        padding: 0;
+
+        display: flex;
+        align-items: flex-end;
     }
 
     #spriteShopkeeper{
         width: 100%;
         height: auto;
-    }
-
-    #content{
-        height: 100%;
-        width: 100%;
         
     }
 </style>
 {% endblock styles %}
 
 {% block content %}
-<div id="image">
+<div class="container col-6" id="image">
     <img src="{{url_for('static', filename='shopkeeper.png')}}" alt="Shopkeeper" id="spriteShopkeeper">
 </div>
-<div class="container" id="shopBox">
-    <form action="#" method="post">
-        <button type="submit" class="btn btn-primary" id="buttonBuyHealth">Heal me</button>
 
-        <button type="submit" class="btn btn-primary" id="buttonBuySpeed">Upgrade my weapon</button>
+<div class="container col-6">
+    <div class="container" id="shopBox">
+        <form action="#" method="post" id="formShop">
+            <button type="submit" class="btn btn-primary" id="buttonBuyHealth">Heal me</button>
+            <br>
 
-        <button type="submit" class="btn btn-primary" id="buttonBuyArmor">Upgrade my armor</button>
+            <button type="submit" class="btn btn-primary" id="buttonBuySpeed">Upgrade my weapon</button>
+            <br>
 
-        <button type="submit" class="btn btn-primary" id="buttonBuyLuck">Upgrade my ship</button>
-    </form>
+            <button type="submit" class="btn btn-primary" id="buttonBuyArmor">Upgrade my armor</button>
+            <br>
+
+            <button type="submit" class="btn btn-primary" id="buttonBuyLuck">Upgrade my ship</button>
+            <br>
+        </form>
+    </div>
 </div>
 {% endblock content %}

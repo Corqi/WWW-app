@@ -22,19 +22,25 @@
     }
 
     #image{
-        margin-bottom: 100px;
+        margin-bottom: 55px;
+    }
+
+    #spriteShopkeeper{
+        width: 100%;
+        height: auto;
     }
 
     #content{
         height: 100%;
         width: 100%;
+        
     }
 </style>
 {% endblock styles %}
 
 {% block content %}
 <div id="image">
-    <img src="{{url_for('static', filename='shopkeeper.png')}}" alt="Shopkeeper">
+    <img src="{{url_for('static', filename='shopkeeper.png')}}" alt="Shopkeeper" id="spriteShopkeeper">
 </div>
 <div class="container" id="shopBox">
     <form action="#" method="post">

@@ -66,13 +66,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <button type="button" class="btn btn-secondary">Shop</button>
+                <a href="{{ url_for('bp_game.shop_get') }}">
+                    <button type="button" class="btn btn-secondary">Shop</button>
+                </a>
             </li>
             <li class="nav-item">
-                <button type="button" class="btn btn-secondary">Canteen</button>
+                <a href="{{ url_for('bp_game.bar_get') }}">
+                    <button type="button" class="btn btn-secondary">Canteen</button>
+                </a>
             </li>
             <li class="nav-item">
-                <button type="button" class="btn btn-secondary">Settings</button>
+                <a href="{{ url_for('bp_game.settings_get') }}">
+                    <button type="button" class="btn btn-secondary">Settings</button>
+                </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('bp_auth.logout_get') }}">

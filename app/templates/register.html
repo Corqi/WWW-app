@@ -23,20 +23,38 @@
 {% block form %}
 {% with messages = get_flashed_messages() %}
 {% if messages %}
-    <div class="alert alert-danger" role="alert">
-        {{ messages[0] }}
+    {% for message in messages %}
+    <div class="{% if category == "info"%} alert alert-success {% else %} alert alert-danger {% endif %}" role="alert">
+        {{ message }}
     </div>
+    {% endfor %}
 {% endif %}
 {% endwith %}
+
+{% if form.errors %}
+    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+        {% for error in field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
 <form action="#" method="post">
-    <label class="col-form-label" for="inputNickname">Nickname</label>
-    <input type="text" class="form-control" placeholder="Nickname" id="inputNickname" name="name">
+    {{ form.csrf_token }}
 
-    <label class="col-form-label" for="inputEmail">Email</label>
-    <input type="email" class="form-control" placeholder="Email@example.com" id="inputEmail" name="email">
+    {{ form.name.label(class_="col-form-label") }}
+    {{ form.name(class="form-control", placeholder="nickname") }}
 
-    <label class="col-form-label" for="inputPassword">Password</label>
-    <input type="password" class="form-control" placeholder="Password" id="inputPassword" name="password">
+    {{ form.email.label(class_="col-form-label") }}
+    {{ form.email(class="form-control", placeholder="email@example.com") }}
+
+    {{ form.password.label(class_="col-form-label") }}
+    {{ form.password(class="form-control", placeholder="password") }}
+
+    {{ form.password_confirm.label(class_="col-form-label") }}
+    {{ form.password_confirm(class="form-control", placeholder="confirm password") }}
 
     <button type="submit" class="btn btn-primary" id="buttonRegister">Sign Up</button>
 

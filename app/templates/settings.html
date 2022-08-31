@@ -33,56 +33,67 @@
     <div class="card-body">
         <h5 class="card-title">Settings</h5>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% with messages = get_flashed_messages(with_categories=true, category_filter=["name_info", "name_error"]) %}
         {% if messages %}
             {% for category, message in messages %}
                 {% if category == "name_info" or category == "name_error" %}
-            <div class="{% if category == "name_info"%} alert alert-success {% elif category == "name_error"%} alert alert-danger {% endif %}" role="alert">
-                {{ message }}
-            </div>
+                    <div class="{% if category == "name_info"%} alert alert-success {% elif category == "name_error"%} alert alert-danger {% endif %}" role="alert">
+                        {{ message }}
+                    </div>
                 {% endif %}
             {% endfor %}
         {% endif %}
         {% endwith %}
-        <form action="#" method="post">
-            <label class="col-form-label" for="inputNickname">Current nickname: <b>{{ current_user.name }}</b></label>
-            <input type="text" class="form-control" placeholder="Nickname" id="inputNickname" name="name">
-            <button type="submit" class="btn btn-primary" id="buttonChangeNickname" name="name_submit">Change nickname</button>
+
+        <form action="{{ url_for('bp_settings.change_name') }}" method="post">
+            {{ name_form.csrf_token }}
+            {{ name_form.name.label(class_="col-form-label") }}
+            {{ name_form.name(class="form-control", placeholder=current_user.name) }}
+            {{ name_form.submit(class="btn btn-primary") }}
         </form>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% with messages = get_flashed_messages(with_categories=true, category_filter=["email_info", "email_error"]) %}
         {% if messages %}
             {% for category, message in messages %}
                 {% if category == "email_info" or category == "email_error" %}
-            <div class="{% if category == "email_info"%} alert alert-success {% elif category == "email_error"%} alert alert-danger {% endif %}" role="alert">
-                {{ message }}
-            </div>
+                    <div class="{% if category == "email_info"%} alert alert-success {% elif category == "email_error"%} alert alert-danger {% endif %}" role="alert">
+                        {{ message }}
+                    </div>
                 {% endif %}
             {% endfor %}
         {% endif %}
         {% endwith %}
-        <form action="#" method="post">
-            <label class="col-form-label" for="inputEmail">Current e-mail: <b>{{ current_user.email }}</b></label>
-            <input type="email" class="form-control" placeholder="Email@example.com" id="inputEmail" name="email">
-            <button type="submit" class="btn btn-primary" id="buttonChangeEmail" name="email_submit">Change email</button>
+
+        <form action="{{ url_for('bp_settings.change_email') }}" method="post">
+            {{ email_form.csrf_token }}
+            {{ email_form.email.label(class_="col-form-label") }}
+            {{ email_form.email(class="form-control", placeholder=current_user.email) }}
+            {{ email_form.submit(class="btn btn-primary") }}
         </form>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% with messages = get_flashed_messages(with_categories=true, category_filter=["password_info", "password_error"]) %}
         {% if messages %}
             {% for category, message in messages %}
                 {% if category == "password_info" or category == "password_error" %}
-            <div class="{% if category == "password_info"%} alert alert-success {% elif category == "password_error"%} alert alert-danger {% endif %}" role="alert">
-                {{ message }}
-            </div>
+                    <div class="{% if category == "password_info"%} alert alert-success {% elif category == "password_error"%} alert alert-danger {% endif %}" role="alert">
+                        {{ message }}
+                    </div>
                 {% endif %}
             {% endfor %}
         {% endif %}
         {% endwith %}
-        <form action="#" method="post">
-            <label class="col-form-label" for="inputPassword">Password</label>
-            <input type="password" class="form-control" placeholder="Current password" id="inputPassword" name="password">
-            <input type="password" class="form-control" placeholder="New password" id="inputPassword" name="new_password">
-            <button type="submit" class="btn btn-primary" id="buttonChangePassword" name="password_submit">Change password</button>
+
+        <form action="{{ url_for('bp_settings.change_password') }}" method="post">
+            {{ password_form.csrf_token }}
+            {{ password_form.password.label(class_="col-form-label") }}
+            {{ password_form.password(class="form-control", placeholder="password") }}
+
+            {{ password_form.new_password.label(class_="col-form-label") }}
+            {{ password_form.new_password(class="form-control", placeholder="new password") }}
+
+            {{ password_form.new_password_confirm.label(class_="col-form-label") }}
+            {{ password_form.new_password_confirm(class="form-control", placeholder="confirm password") }}
+            {{ password_form.submit(class="btn btn-primary") }}
         </form>
     </div>
 </div>

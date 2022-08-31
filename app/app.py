@@ -42,11 +42,6 @@ def create_app():
     with app.app_context():
         db.create_all()
         db.session.commit()
-        # admin = User('adminsds', 'admssin@edxample.com')
-        # db.session.add(admin)
-        # db.session.commit()
-        users = User.query.all()
-        print(users)
 
     # Register blueprints (views)
     from .views.auth import bp as bp_auth
@@ -57,6 +52,9 @@ def create_app():
 
     from .views.chat import bp as bp_chat
     app.register_blueprint(bp_chat)
+
+    from .views.settings import bp as bp_settings
+    app.register_blueprint(bp_settings)
 
     # for localhost only
     app.run()

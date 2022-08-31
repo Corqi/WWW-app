@@ -88,9 +88,13 @@
 
 {% block content %}
 <div class="container col-6" id="leftShopBox">
+{% with messages = get_flashed_messages() %}
+{% if messages %}
     <div class="row" id="shopkeeperMessage">
-        <h1 class="text-secondary"><b>I hate css man...</b></h1>
+        <h5 class="text-secondary"><b>{{ messages[0] }}.</b></h5>
     </div>
+{% endif %}
+{% endwith %}
     <div class="row" id="image">
         <img src="{{url_for('static', filename='shopkeeper.png')}}" alt="Shopkeeper" id="spriteShopkeeper">
     </div>
@@ -109,8 +113,8 @@
 
         <div class="row">
             <div class="container col-6 shopButtons">
-                <a href="/shop/heal" class="{% if heal_btn  %}{% else %}disabled{% endif %}">
-                    <button class="btn btn-primary" id="buttonBuyHealth" {% if heal_btn  %}{% else %}disabled{% endif %}>Heal me</button>
+                <a href="/shop/heal" class="{% if state['heal']  %}{% else %}disabled{% endif %}">
+                    <button class="btn btn-primary" id="buttonBuyHealth" {% if state['heal']  %}{% else %}disabled{% endif %}>Heal me</button>
                 </a>
             </div>
             <div class="container col-6 textShop"> 
@@ -120,8 +124,8 @@
         
         <div class="row">
             <div class="container col-6 shopButtons">
-                <a href="/shop/upgrade_weapon" class="{% if upgrade_weapon_btn  %}{% else %}disabled{% endif %}">
-                    <button class="btn btn-primary" id="buttonBuySpeed" {% if upgrade_weapon_btn  %}{% else %}disabled{% endif %}>Upgrade my weapon</button>
+                <a href="/shop/upgrade_weapon" class="{% if state['upgrade_weapon']  %}{% else %}disabled{% endif %}">
+                    <button class="btn btn-primary" id="buttonBuySpeed" {% if state['upgrade_weapon']  %}{% else %}disabled{% endif %}>Upgrade my weapon</button>
                 </a>
             </div>
             <div class="container col-6 textShop"> 
@@ -131,8 +135,8 @@
 
         <div class="row">
             <div class="container col-6 shopButtons">
-                <a href="/shop/upgrade_armor" class="{% if upgrade_armor_btn  %}{% else %}disabled{% endif %}">
-                    <button class="btn btn-primary" id="buttonBuyArmor" {% if upgrade_armor_btn  %}{% else %}disabled{% endif %}>Upgrade my armor</button>
+                <a href="/shop/upgrade_armor" class="{% if state['upgrade_armor']  %}{% else %}disabled{% endif %}">
+                    <button class="btn btn-primary" id="buttonBuyArmor" {% if state['upgrade_armor']  %}{% else %}disabled{% endif %}>Upgrade my armor</button>
                 </a>
             </div>
             <div class="container col-6 textShop"> 
@@ -142,8 +146,8 @@
 
         <div class="row">
             <div class="container col-6 shopButtons">
-                <a href="/shop/upgrade_ship" class="{% if upgrade_ship_btn  %}{% else %}disabled{% endif %}">
-                    <button class="btn btn-primary" id="buttonBuyLuck" {% if upgrade_ship_btn  %}{% else %}disabled{% endif %}>Upgrade my ship</button>
+                <a href="/shop/upgrade_ship" class="{% if state['upgrade_ship']  %}{% else %}disabled{% endif %}">
+                    <button class="btn btn-primary" id="buttonBuyLuck" {% if state['upgrade_ship']  %}{% else %}disabled{% endif %}>Upgrade my ship</button>
                 </a>
             </div>
             <div class="container col-6 textShop"> 

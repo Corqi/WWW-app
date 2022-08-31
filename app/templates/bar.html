@@ -4,7 +4,8 @@
 {{ super() }}
 <style>
     #containerChat{
-        margin-left: 0;
+        margin-left: auto;
+        margin-right: auto;
         background-color: rgb(34, 34, 34);
         width: 500px;
 
@@ -18,6 +19,38 @@
         height: 30vh;
         overflow: auto;
     }
+
+    #rightBarBox{
+        justify-content: center;
+    }
+
+    #leftBarBox{
+        text-align: center;
+        height: 100%;
+        padding: 30px;
+
+        align-content: center;
+    }
+
+    .missionBox{
+        background-color: rgb(34, 34, 34);
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+
+        padding: 20px;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        width: 50%;
+        height: 25%;
+    }
+
+    .missionBox p{
+        font-size: larger;
+    }
 </style>
 {% endblock styles %}
 
@@ -27,21 +60,34 @@
         crossorigin="anonymous">
 </script>
 
-{% block chatBox %}
-    <div class="containter-fluid">
-        <div class="container" id="containerChat">
-            <div class="container" id="messagesWindow">
+<div class="container col-6" id="leftBarBox">
+    <div class="row missionBox">
+        <p><b>I hate css man...</b></p>
+    </div>
 
-            </div>
-            <div>
-                <input type="text" id="message-input" class="form-control" maxlength="500">
-                <button id="send-button" onclick="addMessage();">Send</button>
-            </div>
+    <div class="row missionBox">
+        <p class="text-warning"><b>I hate css but in yellow</b></p>
+    </div>
+
+    <div class="row missionBox">
+        <p class="text-success"><b>I hate css in green this time</b></p>
+    </div>
+</div>
+
+<div class="container col-6 rightBarBox">
+    {% block chatBox %}
+    <div class="container" id="containerChat">
+        <div class="container" id="messagesWindow">
+
+        </div>
+        <div>
+            <input type="text" id="message-input" class="form-control" maxlength="500">
+            <button id="send-button" onclick="addMessage();">Send</button>
         </div>
     </div>
-{% endblock chatBox %}
+    {% endblock chatBox %}
 
-<script>
+    <script>
     var currentUserID = {{ current_user.id }};
     var lastMessageID = null;
     const messagesWindow = document.getElementById('messagesWindow');
@@ -83,7 +129,7 @@
     function appendMessageToChatWindow(messageID, username, content, created_at){
         $('#messagesWindow').append(`<div id="message-${messageID}">
                                     <p>[${created_at}]: ${username}: ${content}</p>
-                                  </div>`)
+                                    </div>`)
     }
 
     function addMessage() {
@@ -116,7 +162,8 @@
         loadMessages();
     });
 
-  {% endraw %}
-</script>
+    {% endraw %}
+    </script>
+</div>
 
 {% endblock content %}

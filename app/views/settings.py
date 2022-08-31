@@ -46,6 +46,7 @@ def settings_get():
 
 
 @bp.route('/settings/name', methods=['POST'])
+@login_required
 def change_name():
     name_form = ChangeNameForm()
 
@@ -67,6 +68,7 @@ def change_name():
 
 
 @bp.route('/settings/email', methods=['POST'])
+@login_required
 def change_email():
     email_form = ChangeEmailForm()
 
@@ -89,6 +91,7 @@ def change_email():
 
 
 @bp.route('/settings/password', methods=['POST'])
+@login_required
 def change_password():
     password_form = ChangePasswordForm()
 

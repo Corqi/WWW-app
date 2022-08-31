@@ -27,9 +27,12 @@ def change_name():
     name_form = ChangeNameForm()
 
     if name_form.validate_on_submit():
-        print(name_form.errors)
-        # TODO check if there is the same nickname in db
         if name_form.name.data != current_user.name:
+            user = User.query.filter_by(name=name_form.name.data).first()
+            if user:
+                flash(f'Nickname already exists.', 'name_error')
+                return redirect(url_for('bp_settings.settings_get'))
+
             current_user.name = name_form.name.data
             db.session.commit()
             flash(f'Your nickname has been changed', 'name_info')

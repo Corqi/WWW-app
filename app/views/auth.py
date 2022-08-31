@@ -57,10 +57,14 @@ def register_get():
         password = form.password.data
 
         user = User.query.filter_by(email=email).first()
-
         if user:
             flash(Markup(f'Email address already exists. Go to <a href="{url_for("bp_auth.login_get")}">login page</a>.'),
                   'error')
+            return redirect(url_for('bp_auth.register_get'))
+
+        user = User.query.filter_by(name=name).first()
+        if user:
+            flash(Markup(f'Nickname already exists.'), 'error')
             return redirect(url_for('bp_auth.register_get'))
 
         new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))

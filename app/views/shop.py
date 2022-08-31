@@ -49,6 +49,9 @@ def shop_get():
         else:
             buttons.state[k] = True
 
+    if current_user.currentHealth >= current_user.maxHealth:
+        buttons.state['heal'] = False
+
     return render_template('shop.html', state=buttons.state, cost=cost)
 
 

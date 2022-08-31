@@ -11,12 +11,6 @@ def game_get():
     return render_template('game.html')
 
 
-@bp.route('/shop')
-@login_required
-def shop_get():
-    return render_template('shop.html')
-
-
 @bp.route('/bar')
 @login_required
 def bar_get():

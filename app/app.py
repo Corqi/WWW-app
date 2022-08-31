@@ -38,11 +38,6 @@ def create_app():
         db.create_all()
         db.session.commit()
 
-    from .models import User
-    with app.app_context():
-        db.create_all()
-        db.session.commit()
-
     # Register blueprints (views)
     from .views.auth import bp as bp_auth
     app.register_blueprint(bp_auth)
@@ -52,6 +47,9 @@ def create_app():
 
     from .views.chat import bp as bp_chat
     app.register_blueprint(bp_chat)
+
+    from .views.shop import bp as bp_shop
+    app.register_blueprint(bp_shop)
 
     from .views.settings import bp as bp_settings
     app.register_blueprint(bp_settings)

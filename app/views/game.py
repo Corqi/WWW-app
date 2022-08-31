@@ -1,10 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
 
-
-from ..app import db
-from ..models import User
 
 bp = Blueprint('bp_game', __name__)
 
@@ -20,10 +16,12 @@ def game_get():
 def shop_get():
     return render_template('shop.html')
 
+
 @bp.route('/bar')
 @login_required
 def bar_get():
     return render_template('bar.html')
+
 
 @bp.route('/game/character')
 @login_required

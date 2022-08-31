@@ -1,11 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, Markup
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField
-from wtforms.validators import InputRequired, Email, EqualTo
 
-import re
+
+from ..forms import LoginForm, RegisterForm
 
 from ..app import db
 from ..models import User
@@ -14,17 +12,6 @@ from ..models import User
 bp = Blueprint('bp_auth', __name__)
 
 
-class LoginForm(FlaskForm):
-    email = StringField('E-mail', validators=[InputRequired(message='E-mail field is required.'), Email()], id='inputEmail')
-    password = PasswordField('Password', validators=[InputRequired(message='Password field is required.')], id='inputPassword')
-    remember = BooleanField('Remember me')
-
-
-class RegisterForm(FlaskForm):
-    email = StringField('E-mail', validators=[InputRequired(message='E-mail field is required.'), Email()], id='inputEmail')
-    name = StringField('Name', validators=[InputRequired(message='Name field is required.')])
-    password = PasswordField('Password', validators=[InputRequired(message='Password field is required.')], id='inputPassword')
-    password_confirm = PasswordField('Confirm password', validators=[InputRequired(message='Password field is required.'), EqualTo('password', message='Passwords must be equal')], id='inputPasswordConfirm')
 
 
 @bp.route('/', methods=['POST', 'GET'])

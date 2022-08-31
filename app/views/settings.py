@@ -2,9 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import InputRequired, Email, EqualTo
+from ..forms import ChangeNameForm, ChangeEmailForm, ChangePasswordForm
 
 from ..app import db
 from ..models import User
@@ -12,28 +10,6 @@ from ..models import User
 
 bp = Blueprint('bp_settings', __name__)
 
-
-class ChangeEmailForm(FlaskForm):
-    email = StringField('E-mail', validators=[InputRequired(message='E-mail field is required.'), Email()], id='inputEmail')
-    submit = SubmitField('Change e-mail', id="buttonChangeEmail")
-
-
-class ChangePasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[InputRequired(message='Password field is required.')],
-                             id='inputPassword')
-    new_password = PasswordField('New password', validators=[InputRequired(message='Password field is required.')],
-                             id='inputNewPassword')
-    new_password_confirm = PasswordField('Confirm password',
-                                     validators=[InputRequired(message='Password field is required.'),
-                                                 EqualTo('new_password', message='Passwords must be equal')],
-                                     id='inputPasswordConfirm')
-    submit = SubmitField('Change password', id="buttonChangePassword")
-
-
-class ChangeNameForm(FlaskForm):
-    name = StringField('Name', validators=[InputRequired(message='Name field is required.')])
-    submit = SubmitField('Change nickname', id="buttonChangeNickname")
-    
 
 @bp.route('/settings')
 @login_required

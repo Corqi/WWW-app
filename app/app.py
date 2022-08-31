@@ -53,5 +53,8 @@ def create_app():
     from .views.chat import bp as bp_chat
     app.register_blueprint(bp_chat)
 
+    from .views.settings import bp as bp_settings
+    app.register_blueprint(bp_settings)
+
     # for localhost only
     app.run()

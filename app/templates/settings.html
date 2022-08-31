@@ -45,7 +45,7 @@
         {% endif %}
         {% endwith %}
 
-        <form action="{{ url_for('bp_game.change_name') }}" method="post">
+        <form action="{{ url_for('bp_settings.change_name') }}" method="post">
             {{ name_form.csrf_token }}
             {{ name_form.name.label(class_="col-form-label") }}
             {{ name_form.name(class="form-control", placeholder=current_user.name) }}
@@ -64,7 +64,7 @@
         {% endif %}
         {% endwith %}
 
-        <form action="{{ url_for('bp_game.change_email') }}" method="post">
+        <form action="{{ url_for('bp_settings.change_email') }}" method="post">
             {{ email_form.csrf_token }}
             {{ email_form.email.label(class_="col-form-label") }}
             {{ email_form.email(class="form-control", placeholder=current_user.email) }}
@@ -83,7 +83,7 @@
         {% endif %}
         {% endwith %}
 
-        <form action="{{ url_for('bp_game.change_password') }}" method="post">
+        <form action="{{ url_for('bp_settings.change_password') }}" method="post">
             {{ password_form.csrf_token }}
             {{ password_form.password.label(class_="col-form-label") }}
             {{ password_form.password(class="form-control", placeholder="password") }}

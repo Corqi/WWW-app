@@ -75,6 +75,11 @@
         margin: 10px;
     }
 
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+
     p{
         margin-bottom: 0;
     }
@@ -95,46 +100,54 @@
     <div class="container" id="shopBox">
         <div class="row">
             <div class="container col-6"> 
-                <p>100/100hp</p>
+                <p>{{ current_user.currentHealth }}/{{ current_user.maxHealth }} hp</p>
             </div>
             <div class="container col-6"> 
-                <p>2137$</p>
+                <p>{{ current_user.money }}$</p>
             </div>         
         </div> 
 
         <div class="row">
-            <div class="container col-6 shopButtons"> 
-                <button type="submit" class="btn btn-primary" id="buttonBuyHealth">Heal me</button>
+            <div class="container col-6 shopButtons">
+                <a href="/shop/heal" class="{% if heal_btn  %}{% else %}disabled{% endif %}">
+                    <button class="btn btn-primary" id="buttonBuyHealth" {% if heal_btn  %}{% else %}disabled{% endif %}>Heal me</button>
+                </a>
             </div>
             <div class="container col-6 textShop"> 
-                <p>0$</p>
+                <p>{{ cost.heal }} $</p>
             </div>         
         </div> 
         
         <div class="row">
-            <div class="container col-6 shopButtons"> 
-                <button type="submit" class="btn btn-primary" id="buttonBuySpeed">Upgrade my weapon</button>
+            <div class="container col-6 shopButtons">
+                <a href="/shop/upgrade_weapon" class="{% if upgrade_weapon_btn  %}{% else %}disabled{% endif %}">
+                    <button class="btn btn-primary" id="buttonBuySpeed" {% if upgrade_weapon_btn  %}{% else %}disabled{% endif %}>Upgrade my weapon</button>
+                </a>
             </div>
             <div class="container col-6 textShop"> 
-                <p>0$</p>
+                <p>{{ cost.upgrade_weapon }}$</p>
             </div>         
         </div> 
 
         <div class="row">
-            <div class="container col-6 shopButtons"> 
-                <button type="submit" class="btn btn-primary" id="buttonBuyArmor">Upgrade my armor</button>
+            <div class="container col-6 shopButtons">
+                <a href="/shop/upgrade_armor" class="{% if upgrade_armor_btn  %}{% else %}disabled{% endif %}">
+                    <button class="btn btn-primary" id="buttonBuyArmor" {% if upgrade_armor_btn  %}{% else %}disabled{% endif %}>Upgrade my armor</button>
+                </a>
             </div>
             <div class="container col-6 textShop"> 
-                <p>0$</p>
+                <p>{{ cost.upgrade_armor }} $</p>
             </div>         
         </div> 
 
         <div class="row">
-            <div class="container col-6 shopButtons"> 
-                <button type="submit" class="btn btn-primary" id="buttonBuyLuck">Upgrade my ship</button>
+            <div class="container col-6 shopButtons">
+                <a href="/shop/upgrade_ship" class="{% if upgrade_ship_btn  %}{% else %}disabled{% endif %}">
+                    <button class="btn btn-primary" id="buttonBuyLuck" {% if upgrade_ship_btn  %}{% else %}disabled{% endif %}>Upgrade my ship</button>
+                </a>
             </div>
             <div class="container col-6 textShop"> 
-                <p>0$</p>
+                <p>{{ cost.upgrade_ship }} $</p>
             </div>         
         </div>      
     </div>

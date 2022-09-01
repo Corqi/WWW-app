@@ -46,10 +46,20 @@
 
         background: rgb(255, 255, 255);
         padding: 20px;
+        
+        margin-left: auto;
+        margin-right: auto;
+
+        align-content: center;
+        width: fit-content;
+        height: fit-content;
+    }
+
+    #containerShopkeeperMessage{
         width: 50%;
         min-width: 250px;
         height: 20%;
-        
+
         margin-left: auto;
         margin-right: auto;
 
@@ -89,11 +99,13 @@
 {% block content %}
 <div class="container col-6" id="leftShopBox">
 {% with messages = get_flashed_messages() %}
+<div class="row" id="containerShopkeeperMessage">
 {% if messages %}
-    <div class="row" id="shopkeeperMessage">
-        <h5 class="text-secondary"><b>{{ messages[0] }}.</b></h5>
+    <div class="container-fluid" id="shopkeeperMessage">
+        <h5 class="text-secondary"><b>{{ messages[0] }}</b></h5>
     </div>
 {% endif %}
+</div>
 {% endwith %}
     <div class="row" id="image">
         <img src="{{url_for('static', filename='shopkeeper.png')}}" alt="Shopkeeper" id="spriteShopkeeper">

@@ -29,8 +29,7 @@ def chat_messages_get():
             'id': msg.id,
             'user_id': msg.user_id,
             'username': msg.user.name,
-            'content': msg.content,
-            'created_at': msg.created_at
+            'content': msg.content
         })
     return jsonify(results)
 

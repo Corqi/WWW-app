@@ -5,8 +5,7 @@ from flask_login import login_user, logout_user, current_user
 from ..forms import LoginForm, RegisterForm
 
 from ..app import db
-from ..models import User
-
+from ..models import User, MissionHandler
 
 bp = Blueprint('bp_auth', __name__)
 
@@ -66,6 +65,9 @@ def register_get():
 
         new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
         db.session.add(new_user)
+        db.session.commit()
+        new_mission_handler = MissionHandler(user_id=new_user.id)
+        db.session.add(new_mission_handler)
         db.session.commit()
 
         flash('Your account has been created you can now log in', 'info')

@@ -3,6 +3,11 @@
 {% block styles %}
 {{ super() }}
 <style>
+    /* overwrite default bg */
+    #bg{
+        background-image: url("{{url_for('static', filename='main_bg.png')}}");
+    }
+
     #settingsBox{
         border-style: solid;
         border-radius: 25px;

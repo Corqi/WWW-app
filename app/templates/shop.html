@@ -16,7 +16,7 @@
 
         background: rgb(34, 34, 34);
         padding: 20px;
-        width: 70%;
+        width: fit-content;
         min-width: 250px;
         height: auto;
     }
@@ -95,6 +95,15 @@
     p{
         margin-bottom: 0;
     }
+
+    tr td{
+        border-style: solid;
+        border-color: rgb(39, 48, 57);
+        border-width: medium;
+
+        text-align: center;
+        padding: 5px
+    }
 </style>
 {% endblock styles %}
 
@@ -116,7 +125,45 @@
 
 <div class="container col-6">
     <div class="container" id="shopBox">
-        <div class="row">
+        <table>
+            <tr>
+                <td><p>{{ current_user.currentHealth }}/{{ current_user.maxHealth }} HP</p></td>
+                <td><p>{{ current_user.money }} Credits</p></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="/shop/heal" class="{% if state['heal']  %}{% else %}disabled{% endif %}">
+                        <button class="btn btn-primary" id="buttonBuyHealth" {% if state['heal']  %}{% else %}disabled{% endif %}>Heal me</button>
+                    </a>
+                </td>
+                <td><p>{{ cost.heal }} Credits</p></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="/shop/upgrade_weapon" class="{% if state['upgrade_weapon']  %}{% else %}disabled{% endif %}">
+                        <button class="btn btn-primary" id="buttonBuySpeed" {% if state['upgrade_weapon']  %}{% else %}disabled{% endif %}>Upgrade my weapon</button>
+                    </a>
+                </td>
+                <td><p>{{ cost.upgrade_weapon }} Credits</p></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="/shop/upgrade_armor" class="{% if state['upgrade_armor']  %}{% else %}disabled{% endif %}">
+                        <button class="btn btn-primary" id="buttonBuyArmor" {% if state['upgrade_armor']  %}{% else %}disabled{% endif %}>Upgrade my armor</button>
+                    </a>
+                </td>
+                <td><p>{{ cost.upgrade_armor }} Credits</p></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="/shop/upgrade_ship" class="{% if state['upgrade_ship']  %}{% else %}disabled{% endif %}">
+                        <button class="btn btn-primary" id="buttonBuyLuck" {% if state['upgrade_ship']  %}{% else %}disabled{% endif %}>Upgrade my ship</button>
+                    </a>
+                </td>
+                <td><p>{{ cost.upgrade_ship }} Credits</p></td>
+            </tr>
+        </table>
+        <!-- <div class="row">
             <div class="container col-6"> 
                 <p>{{ current_user.currentHealth }}/{{ current_user.maxHealth }} hp</p>
             </div>
@@ -167,7 +214,7 @@
             <div class="container col-6 textShop"> 
                 <p>{{ cost.upgrade_ship }} $</p>
             </div>         
-        </div>      
+        </div>       -->
     </div>
 </div>
 {% endblock content %}

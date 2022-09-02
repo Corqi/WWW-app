@@ -22,19 +22,12 @@
         overflow: auto;
     }
 
-    #rightBarBox{
-        justify-content: center;
-    }
-
     #leftBarBox{
-        text-align: center;
         height: 100%;
         padding: 30px;
-
-        align-content: center;
     }
 
-    .missionBox{
+    /* .missionBox{
         background-color: rgb(34, 34, 34);
         border-style: solid;
         border-radius: 25px;
@@ -47,11 +40,40 @@
         margin-right: auto;
 
         width: 50%;
+    } */
+
+    .missionBox{
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        max-width: 25rem;
+        overflow: hidden;
     }
 
-    .missionBox p{
-        font-size: larger;
+    #missionBoxHard{
+        margin-bottom: 0;
     }
+
+    .missionBox .card-header{
+        border-radius: 15px 15px 0 0;
+    }
+    .card-title{
+        text-align: center;
+    }
+
+    .card-body .btn{
+        width: 100%;
+        margin-top: 0;
+    }
+
+    /* .missionBox p{
+        font-size: larger;
+    } */
 </style>
 {% endblock styles %}
 
@@ -61,7 +83,7 @@
         crossorigin="anonymous">
 </script>
 
-<div class="container col-6" id="leftBarBox">
+<!-- <div class="container col-6" id="leftBarBox">
     <div class="row missionBox">
         <h3>{{ chosen_easy.title }}</h3>
         <p>Desc: {{ chosen_easy.content }}</p>
@@ -87,6 +109,50 @@
         <p id="hard_money: ">Money: {{ mission_handler.hard_mission_cost }}</p>
         <p id="hard_duration: ">Duration: {{ mission_handler.hard_mission_duration }}</p>
         <button type="submit" class="btn btn-primary">Accept</button>
+    </div>
+</div> -->
+
+<div class="container col-6" id="leftBarBox">
+    <div class="card border-success mb-3 missionBox" >
+        <div class="card-header">
+            <h5 class="card-title">{{ chosen_easy.title }}</h5>
+        </div>
+
+        <div class="card-body">
+            <p class="card-text">{{ chosen_easy.content }}</p>
+            <p class="card-text">Danger: low</p>
+            <p class="card-text">Money: {{ mission_handler.easy_mission_cost }}</p>
+            <p class="card-text">Duration: {{ mission_handler.easy_mission_duration }}</p>
+            <button type="submit" class="btn btn-outline-success">Accept</button>
+        </div>
+    </div>
+
+    <div class="card border-warning mb-3 missionBox" >
+        <div class="card-header">
+            <h5 class="card-title">{{ chosen_medium.title }}</h5>
+        </div>
+
+        <div class="card-body">
+            <p class="card-text">{{ chosen_medium.content }}</p>
+            <p class="card-text">Danger: medium</p>
+            <p class="card-text">Money: {{ mission_handler.medium_mission_cost }}</p>
+            <p class="card-text">Duration: {{ mission_handler.medium_mission_duration }}</p>
+            <button type="submit" class="btn btn-outline-warning">Accept</button>
+        </div>
+    </div>
+
+    <div class="card border-danger mb-3 missionBox" id="missionBoxHard">
+        <div class="card-header">
+            <h5 class="card-title">{{ chosen_hard.title }}</h5>
+        </div>
+
+        <div class="card-body">
+            <p class="card-text">{{ chosen_hard.content }}</p>
+            <p class="card-text">Danger: high</p>
+            <p class="card-text">Money: {{ mission_handler.hard_mission_cost }}</p>
+            <p class="card-text">Duration: {{ mission_handler.hard_mission_duration }}</p>
+            <button type="submit" class="btn btn-outline-danger">Accept</button>
+        </div>
     </div>
 </div>
 

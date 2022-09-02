@@ -71,9 +71,19 @@
         margin-top: 0;
     }
 
-    /* .missionBox p{
-        font-size: larger;
-    } */
+    #send-button{
+        margin-top: 0;
+        width: 100%;
+    }
+
+    #messageWindowInputs{
+        display: flex;
+        padding-top: 5px;
+    }
+
+    .containerMessageInputs{
+        padding: 0;
+    }
 </style>
 {% endblock styles %}
 
@@ -162,9 +172,13 @@
         <div class="container" id="messagesWindow">
 
         </div>
-        <div>
-            <input type="text" id="message-input" class="form-control" maxlength="500">
-            <button id="send-button" onclick="addMessage();">Send</button>
+        <div id="messageWindowInputs">
+            <div class="container col-3 containerMessageInputs">
+                <button class="btn btn-primary" id="send-button" onclick="addMessage();">Send</button>
+            </div>
+            <div class="container col-9 containerMessageInputs">
+                <input type="text" id="message-input" class="form-control" maxlength="500">
+            </div>
         </div>
     </div>
     {% endblock chatBox %}

@@ -1,0 +1,49 @@
+{% extends "game.html" %}
+
+{% block styles %}
+{{ super() }}
+<style>
+    /* overwrite default bg */
+    #bg{
+        background-image: url("{{url_for('static', filename='main_bg.png')}}");
+    }
+
+    #missionBox{
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+
+        background: rgb(34, 34, 34);
+        padding: 20px;
+        width: 50%;
+        min-width: 250px;
+        height: auto;
+    }
+
+    #buttonSubmit{
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        display:block;
+
+        width: 100%;
+        max-width: 200px;
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<div class="card" id="missionBox">
+    <div class="card-body">
+        <h5 class="card-title">Mission</h5>
+
+        <p>Time Left: 2min 30s</p>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <button type="submit" class="btn btn-outline-warning">Collect reward</button>
+    </div>
+</div>
+{% endblock content %}

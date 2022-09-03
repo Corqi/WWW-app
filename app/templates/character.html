@@ -20,11 +20,95 @@
         min-width: 250px;
         height: auto;
     }
+
+    .characterStatsBox{
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        max-width: 20rem;
+        overflow: hidden;
+
+        text-align: center;
+    }
+
+    .characterStatsBox .card-header{
+        border-radius: 15px 15px 0 0;
+    }
+
+    .spriteStats{
+        height: auto;
+        width: 40%;
+    }
 </style>
 {% endblock styles %}
 
 {% block content %}
-    <div class="container-sm" id="containerCharacter">
+<div class="container col-6">
+    <img src="{{url_for('static', filename='character2.png')}}" alt="Character" id="spriteCharacter">
+</div>
+
+<div class="container col-6">
+    <div class="card border-secondary mb-3 characterStatsBox">
+        <div class="card-header">
+            <h5 class="card-title">{{ character.name }}</h5>  
+        </div>
+        <div class="card-body">
+            <p class="card-text">Health: {{ character.currentHealth }}/{{ character.maxHealth }} HP</p>
+            <p class="card-text">Money: {{ character.money }} Credits</p>
+        </div>
+    </div>
+
+    <div class="card border-secondary mb-3 characterStatsBox">
+        <div class="card-header">
+            <h5 class="card-title">Weapon: {{ character.luck }} lvl</h5>
+        </div>
+        <div class="card-body">
+            {% if character.luck == 1 %}
+                <img src="{{url_for('static', filename='test.jpg')}}" alt="Weapon lvl 1" class="spriteStats">
+            {% elif character.luck == 2 %}
+                <img src="{{url_for('static', filename='test2.jpg')}}" alt="Weapon lvl 2" class="spriteStats">
+            {% else %}
+                <img src="{{url_for('static', filename='test3.png')}}" alt="Weapon lvl 3" class="spriteStats">
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card border-secondary mb-3 characterStatsBox">
+        <div class="card-header">
+            <h5 class="card-title">Armor: {{ character.armor }} lvl</h5>
+        </div>
+        <div class="card-body">
+            {% if character.armor == 1 %}
+                <img src="{{url_for('static', filename='test.jpg')}}" alt="Armor lvl 1" class="spriteStats">
+            {% elif character.armor == 2 %}
+                <img src="{{url_for('static', filename='test2.jpg')}}" alt="Armor lvl 2" class="spriteStats">
+            {% else %}
+                <img src="{{url_for('static', filename='test3.png')}}" alt="Armor lvl 3" class="spriteStats">
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card border-secondary mb-3 characterStatsBox">
+        <div class="card-header">
+            <h5 class="card-title">Spaceship: {{ character.speed }} lvl</h5>
+        </div>
+        <div class="card-body">
+            {% if character.speed == 1 %}
+                <img src="{{url_for('static', filename='test.jpg')}}" alt="Spaceship lvl 1" class="spriteStats">
+            {% elif character.speed == 2 %}
+                <img src="{{url_for('static', filename='test2.jpg')}}" alt="Spaceship lvl 2" class="spriteStats">
+            {% else %}
+                <img src="{{url_for('static', filename='test3.png')}}" alt="Spaceship lvl 3" class="spriteStats">
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- <div class="container-sm" id="containerCharacter">
         <p>Name: {{ character.name }}</p>
         <p>Level: {{ character.level }}</p>
         <p>Health: {{ character.currentHealth }}/{{ character.maxHealth }}</p>
@@ -32,5 +116,6 @@
         <p>Speed: {{ character.speed }}</p>
         <p>Armor: {{ character.armor }}</p>
         <p>Luck: {{ character.luck }}</p>
-    </div>
+    </div> -->
+</div>
 {% endblock content %}

@@ -9,14 +9,15 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
     level = db.Column(db.Integer, default=0)
-    currentHealth = db.Column(db.Integer, default=100)
-    maxHealth = db.Column(db.Integer, default=100)
+    current_health = db.Column(db.Integer, default=100)
+    max_health = db.Column(db.Integer, default=100)
     money = db.Column(db.Integer, default=10)
     speed = db.Column(db.Integer, default=1)
     armor = db.Column(db.Integer, default=1)
     luck = db.Column(db.Integer, default=1)
     chat_messages = db.relationship('Message', back_populates="user", lazy=True)
     mission_handler = db.relationship('MissionHandler', back_populates="user")
+    is_free = db.Column(db.String(5), default="true")
 
     def __init__(self, email, password, name):
         self.email = email
@@ -52,6 +53,7 @@ class MissionHandler(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
     last_missions_update = db.Column(db.DateTime(), nullable=False, default=datetime.datetime.now())
+    mission_taken_time = db.Column(db.DateTime())
     easy_mission_id = db.Column(db.Integer, default=1)
     medium_mission_id = db.Column(db.Integer, default=2)
     hard_mission_id = db.Column(db.Integer, default=3)

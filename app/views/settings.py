@@ -14,6 +14,9 @@ bp = Blueprint('bp_settings', __name__)
 @bp.route('/settings')
 @login_required
 def settings_get():
+    if current_user.is_free == "false":
+        return redirect(url_for('bp_mission.set_mission', mission_type=1))
+
     name_form = ChangeNameForm()
     email_form = ChangeEmailForm()
     password_form = ChangePasswordForm()
@@ -24,6 +27,9 @@ def settings_get():
 @bp.route('/settings/name', methods=['POST'])
 @login_required
 def change_name():
+    if current_user.is_free == "false":
+        return redirect(url_for('bp_mission.set_mission', mission_type=1))
+
     name_form = ChangeNameForm()
 
     if name_form.validate_on_submit():
@@ -49,6 +55,9 @@ def change_name():
 @bp.route('/settings/email', methods=['POST'])
 @login_required
 def change_email():
+    if current_user.is_free == "false":
+        return redirect(url_for('bp_mission.set_mission', mission_type=1))
+
     email_form = ChangeEmailForm()
 
     if email_form.validate_on_submit():
@@ -72,6 +81,9 @@ def change_email():
 @bp.route('/settings/password', methods=['POST'])
 @login_required
 def change_password():
+    if current_user.is_free == "false":
+        return redirect(url_for('bp_mission.set_mission', mission_type=1))
+
     password_form = ChangePasswordForm()
 
     if password_form.validate_on_submit():

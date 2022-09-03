@@ -57,5 +57,8 @@ def create_app():
     from .views.bar import bp as bp_bar
     app.register_blueprint(bp_bar)
 
+    from .views.mission import bp as bp_mission
+    app.register_blueprint(bp_mission)
+
     # for localhost only
     app.run()

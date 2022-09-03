@@ -17,6 +17,7 @@ class User(UserMixin, db.Model):
     luck = db.Column(db.Integer, default=1)
     chat_messages = db.relationship('Message', back_populates="user", lazy=True)
     mission_handler = db.relationship('MissionHandler', back_populates="user")
+    is_free = db.Column(db.String(5), default="true")
 
     def __init__(self, email, password, name):
         self.email = email
@@ -63,7 +64,6 @@ class MissionHandler(db.Model):
     easy_mission_duration = db.Column(db.Integer, default=30)
     medium_mission_duration = db.Column(db.Integer, default=60)
     hard_mission_duration = db.Column(db.Integer, default=120)
-    is_free = db.Column(db.String(5), default="true")
     user = db.relationship("User", back_populates="mission_handler")
 
     def __init__(self, user_id):

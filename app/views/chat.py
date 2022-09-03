@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, redirect, url_for
 from ..models import Message
 from ..app import db
 from flask_login import login_required, current_user
@@ -9,6 +9,8 @@ bp = Blueprint('bp_chat', __name__)
 @bp.route('/chat', methods=['GET'])
 @login_required
 def chat_messages_get():
+    if current_user.is_free == "false":
+        return redirect(url_for('bp_mission.set_mission', mission_type=1))
     try:
         message_id = int(request.args.get('message_id'))
     except (ValueError, TypeError):
@@ -37,12 +39,15 @@ def chat_messages_get():
 @bp.route('/chat', methods=['POST'])
 @login_required
 def chat_messages_post():
-        data = request.get_json(force=True)
+    if current_user.is_free == "false":
+        return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
-        if 'content' in data and len(data['content']) >= 1 and len(data['content']) <= 500:
-            obj = Message(user_id=current_user.id, content=data['content'])
-            db.session.add(obj)
-            db.session.commit()
-            return '', 204
-        else:
-            return 'Content is incorrect or was not given.', 400
+    data = request.get_json(force=True)
+
+    if 'content' in data and len(data['content']) >= 1 and len(data['content']) <= 500:
+        obj = Message(user_id=current_user.id, content=data['content'])
+        db.session.add(obj)
+        db.session.commit()
+        return '', 204
+    else:
+        return 'Content is incorrect or was not given.', 400

@@ -25,7 +25,7 @@ def bar_get():
     last_missions_update = mission_handler.last_missions_update
     time_difference = datetime.datetime.now() - last_missions_update
 
-    if mission_handler.is_free == "false":
+    if current_user.is_free == "false":
         start_time = mission_handler.mission_taken_time
         if mission_handler.mission_picked_id == 1:
             end_time = start_time + datetime.timedelta(seconds=mission_handler.easy_mission_duration)
@@ -36,7 +36,7 @@ def bar_get():
 
         # here player receives money and damage after completing mission
         if datetime.datetime.now() >= end_time:
-            mission_handler.is_free = "true"
+            current_user.is_free = "true"
             if mission_handler.mission_picked_id == 1:
                 current_user.money += mission_handler.easy_mission_cost
                 random_damage = random.randint(0, 10)
@@ -46,14 +46,16 @@ def bar_get():
             else:
                 current_user.money += mission_handler.hard_mission_cost
                 random_damage = random.randint(21, 30)
+
             current_user.current_health -= random_damage - calculate_damage_reduction(random_damage)
             mission_handler.mission_picked_id = 0
             db.session.commit()
         else:
-            return 0
+            return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
-    if (time_difference.total_seconds()/60 > 1 and mission_handler.mission_picked_id == 0)\
-            and mission_handler.is_free == "true":
+    if (current_user.is_free == "true" and time_difference.total_seconds()/60 > 1
+        and mission_handler.mission_picked_id == 0)\
+            or current_user.is_free == "true":
         mission_handler.mission_picked_id = 0
         easy_missions = Mission.query.filter_by(danger_level=1).all()
         medium_missions = Mission.query.filter_by(danger_level=2).all()
@@ -84,9 +86,9 @@ def bar_get():
         easy_duration_reduction = calculate_duration_reduction(random_easy_duration)
         medium_duration_reduction = calculate_duration_reduction(random_medium_duration)
         hard_duration_reduction = calculate_duration_reduction(random_hard_duration)
-        mission_handler.easy_mission_duration = random_easy_duration + easy_duration_reduction
-        mission_handler.medium_mission_duration = random_medium_duration + medium_duration_reduction
-        mission_handler.hard_mission_duration = random_hard_duration + hard_duration_reduction
+        mission_handler.easy_mission_duration = random_easy_duration - easy_duration_reduction
+        mission_handler.medium_mission_duration = random_medium_duration - medium_duration_reduction
+        mission_handler.hard_mission_duration = random_hard_duration - hard_duration_reduction
 
         mission_handler.last_missions_update = datetime.datetime.now()
 

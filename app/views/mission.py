@@ -13,8 +13,8 @@ bp = Blueprint('bp_mission', __name__)
 @login_required
 def set_mission(mission_type):
     mission_handler = MissionHandler.query.filter_by(user_id=current_user.id).first()
-    if mission_handler.is_free == "true":
-        mission_handler.is_free = "false"
+    if current_user.is_free == "true":
+        current_user.is_free = "false"
         mission_handler.mission_picked_id = mission_type
         mission_handler.mission_taken_time = datetime.datetime.now()
         db.session.commit()

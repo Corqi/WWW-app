@@ -39,6 +39,9 @@ class Buttons:
 @bp.route('/shop')
 @login_required
 def shop_get():
+    if current_user.is_free == "false":
+        return redirect(url_for('bp_mission.set_mission', mission_type=1))
+
     cost = Cost()
     buttons = Buttons()
 
@@ -58,6 +61,9 @@ def shop_get():
 @bp.route('/shop/heal')
 @login_required
 def heal():
+    if current_user.is_free == "false":
+        return redirect(url_for('bp_mission.set_mission', mission_type=1))
+
     cost = Cost()
     if current_user.current_health >= current_user.max_health:
         flash('You have enough health points')
@@ -77,6 +83,9 @@ def heal():
 @bp.route('/shop/upgrade_weapon')
 @login_required
 def upgrade_weapon():
+    if current_user.is_free == "false":
+        return redirect(url_for('bp_mission.set_mission', mission_type=1))
+
     cost = Cost()
 
     if current_user.money >= cost.upgrade_weapon:
@@ -93,6 +102,9 @@ def upgrade_weapon():
 @bp.route('/shop/upgrade_armor')
 @login_required
 def upgrade_armor():
+    if current_user.is_free == "false":
+        return redirect(url_for('bp_mission.set_mission', mission_type=1))
+
     cost = Cost()
     if current_user.money >= cost.upgrade_armor:
         current_user.money -= cost.upgrade_armor
@@ -108,6 +120,8 @@ def upgrade_armor():
 @bp.route('/shop/upgrade_ship')
 @login_required
 def upgrade_ship():
+    if current_user.is_free == "false":
+        return redirect(url_for('bp_mission.set_mission', mission_type=1))
     cost = Cost()
     if current_user.money >= cost.upgrade_ship:
         current_user.money -= cost.upgrade_ship

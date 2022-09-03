@@ -52,7 +52,12 @@
         margin-right: auto;
 
         max-width: 25rem;
-        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    #messagesWindow{
+        overflow-x: hidden;
+        overflow-wrap: break-word;
     }
 
     #missionBoxHard{
@@ -93,34 +98,7 @@
         crossorigin="anonymous">
 </script>
 
-<!-- <div class="container col-6" id="leftBarBox">
-    <div class="row missionBox">
-        <h3>{{ chosen_easy.title }}</h3>
-        <p>Desc: {{ chosen_easy.content }}</p>
-        <p>Danger: low</p>
-        <p id="easy_money: ">Money: {{ mission_handler.easy_mission_cost }}</p>
-        <p id="easy_duration: ">Duration: {{ mission_handler.easy_mission_duration }}</p>
-        <button type="submit" class="btn btn-primary">Accept</button>
-    </div>
 
-    <div class="row missionBox">
-        <h3>{{ chosen_medium.title }}</h3>
-        <p>Desc: {{ chosen_medium.content }}</p>
-        <p>Danger: medium</p>
-        <p id="medium_money: ">Money: {{ mission_handler.medium_mission_cost }}</p>
-        <p id="medium_duration: ">Duration: {{ mission_handler.medium_mission_duration }}</p>
-        <button type="submit" class="btn btn-primary">Accept</button>
-    </div>
-
-    <div class="row missionBox">
-        <h3>{{ chosen_hard.title }}</h3>
-        <p>Desc: {{ chosen_hard.content }}</p>
-        <p>Danger: high</p>
-        <p id="hard_money: ">Money: {{ mission_handler.hard_mission_cost }}</p>
-        <p id="hard_duration: ">Duration: {{ mission_handler.hard_mission_duration }}</p>
-        <button type="submit" class="btn btn-primary">Accept</button>
-    </div>
-</div> -->
 
 <div class="container col-6" id="leftBarBox">
     <div class="card border-success mb-3 missionBox" >
@@ -130,10 +108,11 @@
 
         <div class="card-body">
             <p class="card-text">{{ chosen_easy.content }}</p>
-            <p class="card-text">Danger: low</p>
-            <p class="card-text">Money: {{ mission_handler.easy_mission_cost }}</p>
-            <p class="card-text">Duration: {{ mission_handler.easy_mission_duration }}</p>
-            <button type="submit" class="btn btn-outline-success">Accept</button>
+            <p class="card-text">Money: {{ cost_dict['easy_cost'] }} (+{{ cost_dict['easy_increase'] }})</p>
+            <p class="card-text">Duration: {{ duration_dict['easy_duration'] }} (-{{ duration_dict['easy_reduction'] }})</p>
+            <a href="{{ url_for('bp_mission.set_mission', mission_type=1) }}">
+                <button type="submit" class="btn btn-outline-success">Accept</button>
+            </a>
         </div>
     </div>
 
@@ -144,10 +123,11 @@
 
         <div class="card-body">
             <p class="card-text">{{ chosen_medium.content }}</p>
-            <p class="card-text">Danger: medium</p>
-            <p class="card-text">Money: {{ mission_handler.medium_mission_cost }}</p>
-            <p class="card-text">Duration: {{ mission_handler.medium_mission_duration }}</p>
-            <button type="submit" class="btn btn-outline-warning">Accept</button>
+            <p class="card-text">Money: {{ cost_dict['medium_cost'] }} (+{{ cost_dict['medium_increase'] }})</p>
+            <p class="card-text">Duration: {{ duration_dict['medium_duration'] }} (-{{ duration_dict['medium_reduction'] }})</p>
+            <a href="{{ url_for('bp_mission.set_mission', mission_type=2) }}">
+                <button type="submit" class="btn btn-outline-warning">Accept</button>
+            </a>
         </div>
     </div>
 
@@ -158,10 +138,11 @@
 
         <div class="card-body">
             <p class="card-text">{{ chosen_hard.content }}</p>
-            <p class="card-text">Danger: high</p>
-            <p class="card-text">Money: {{ mission_handler.hard_mission_cost }}</p>
-            <p class="card-text">Duration: {{ mission_handler.hard_mission_duration }}</p>
-            <button type="submit" class="btn btn-outline-danger">Accept</button>
+            <p class="card-text">Money: {{ cost_dict['medium_cost'] }} (+{{ cost_dict['medium_increase'] }})</p>
+            <p class="card-text">Duration: {{ duration_dict['hard_duration'] }} (-{{ duration_dict['hard_reduction'] }})</p>
+            <a href="{{ url_for('bp_mission.set_mission', mission_type=3) }}">
+                <button type="submit" class="btn btn-outline-danger">Accept</button>
+            </a>
         </div>
     </div>
 </div>
@@ -254,11 +235,19 @@
 
     $().ready(function() {
         loadMessages();
+    });
 
+    let input = document.getElementById("message-input");
 
-        $('#easy_money').text();
-        $('#medium_money').text(40);
-        $('#hard_money').text(40);
+    // Execute a function when the user presses a key on the keyboard
+    input.addEventListener("keypress", function(event) {
+      // If the user presses the "Enter" key on the keyboard
+      if (event.key === "Enter") {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        document.getElementById("send-button").click();
+      }
     });
 
     {% endraw %}

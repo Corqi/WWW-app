@@ -38,12 +38,71 @@
     <div class="card-body">
         <h5 class="card-title">Mission</h5>
 
-        <p>Time Left: 2min 30s</p>
+        <p id="time_left_text">Time left: </p>
         <div class="progress">
-            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar progress-bar-striped bg-success" id="current_progress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-duration="{{ duration }}" data-timeleft="{{ time_left }}"></div>
         </div>
-
-        <button type="submit" class="btn btn-outline-warning">Collect reward</button>
+        <a href="{{ url_for('bp_bar.bar_get') }}" id="link_completed">
+            <button type="submit" class="btn btn-outline-warning" id="button_completed">Collect reward</button>
+        </a>
     </div>
 </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<script>
+    {% raw %}
+     $().ready(function() {
+         $('#button_completed').prop('disabled', true);
+         $('#link_completed').css('pointer-events', 'none');
+         $('#button_character').prop('disabled', true);
+         $('#link_character').css('pointer-events', 'none');
+         $('#button_shop').prop('disabled', true);
+         $('#link_shop').css('pointer-events', 'none');
+         $('#button_canteen').prop('disabled', true);
+         $('#link_canteen').css('pointer-events', 'none');
+         $('#button_settings').prop('disabled', true);
+         $('#link_settings').css('pointer-events', 'none');
+
+        let interval = setInterval(updateProgress, 1000);
+        let progress = $('#current_progress');
+        let max = 100;
+        let time = progress.data('duration');
+        let remaining = progress.data('timeleft');
+        let progress_second = max / time;
+        let current = (time - remaining)/time * 100;
+
+            function updateProgress()
+            {
+                let width = Math.min(current + progress_second, 100); // calculate width of progress bar
+                current   = width; // set current width
+                remaining     -= 1; // subtract time every second
+                progress.data('current', width.toFixed(2)); // set data-current attribute value
+
+                progress.css('width', width.toFixed(2) + '%'); // set progress bar width
+
+                progress.text(width.toFixed(2) + '%'); // set progress text
+
+                document.getElementById("time_left_text").innerText = "Time left: " + remaining.toFixed(0);
+
+                if(width >= 100)
+                {
+                    clearInterval(interval);
+                    document.getElementById("time_left_text").innerText = "Time left: 0";
+                    $('#button_completed').prop('disabled', false);
+                    $('#link_completed').css('pointer-events', 'auto');
+                    $('#button_character').prop('disabled', false);
+                    $('#link_character').css('pointer-events', 'auto');
+                    $('#button_shop').prop('disabled', false);
+                    $('#link_shop').css('pointer-events', 'auto');
+                    $('#button_canteen').prop('disabled', false);
+                    $('#link_canteen').css('pointer-events', 'auto');
+                    $('#button_settings').prop('disabled', false);
+                    $('#link_settings').css('pointer-events', 'auto');
+                }
+            }
+    });
+    {% endraw %}
+</script>
+
 {% endblock content %}

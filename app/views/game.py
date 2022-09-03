@@ -10,11 +10,6 @@ bp = Blueprint('bp_game', __name__)
 def game_get():
     return render_template('game.html')
 
-@bp.route('/mission')
-@login_required
-def mission_get():
-    return render_template('mission.html')
-
 
 @bp.route('/game/character')
 @login_required

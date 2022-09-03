@@ -49,7 +49,7 @@ def shop_get():
         else:
             buttons.state[k] = True
 
-    if current_user.currentHealth >= current_user.maxHealth:
+    if current_user.current_health >= current_user.max_health:
         buttons.state['heal'] = False
 
     return render_template('shop.html', state=buttons.state, cost=cost)
@@ -59,13 +59,13 @@ def shop_get():
 @login_required
 def heal():
     cost = Cost()
-    if current_user.currentHealth >= current_user.maxHealth:
+    if current_user.current_health >= current_user.max_health:
         flash('You have enough health points')
         return redirect(url_for('bp_shop.shop_get'))
 
     if current_user.money >= cost.heal:
         current_user.money -= cost.heal
-        current_user.currentHealth += cost.heal_bonus
+        current_user.current_health += cost.heal_bonus
         db.session.commit()
         flash('Heal message')
         return redirect(url_for('bp_shop.shop_get'))

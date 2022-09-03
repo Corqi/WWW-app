@@ -71,7 +71,7 @@ def heal():
 
     if current_user.money >= cost.heal:
         current_user.money -= cost.heal
-        current_user.current_health += cost.heal_bonus
+        current_user.current_health = min(current_user.current_health + cost.heal_bonus, 100)
         db.session.commit()
         flash('Heal message')
         return redirect(url_for('bp_shop.shop_get'))

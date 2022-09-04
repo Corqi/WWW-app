@@ -13,11 +13,10 @@ def game_get():
     return render_template('game.html')
 
 
-@bp.route('/game/character')
+@bp.route('/character')
 @login_required
 def character_get():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
-    from ..models import User
-    character = User.query.get_or_404(1)
+    character = current_user
     return render_template("character.html", character=character)

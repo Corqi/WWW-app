@@ -236,6 +236,14 @@
 
     $().ready(function() {
         loadMessages();
+        let texts = document.getElementsByClassName("card-text");
+        for (let i = 0; i < texts.length; i++)
+        {
+            if(texts.item(i).innerText.slice(-4) === "(-0)" || texts.item(i).innerText.slice(-4) === "(+0)")
+            {
+                texts.item(i).innerText = texts.item(i).innerText.slice(0, texts.item(i).innerText.length-4);
+            }
+        }
     });
 
     let input = document.getElementById("message-input");

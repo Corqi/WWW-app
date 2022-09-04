@@ -7,8 +7,7 @@ from ..forms import ChangeNameForm, ChangeEmailForm, ChangePasswordForm
 from ..app import db
 from ..models import User
 
-from ..decorators import selected_character_required
-
+from ..decorators import selected_character_required, is_free_true_required, is_alive_required
 
 bp = Blueprint('bp_settings', __name__)
 
@@ -16,6 +15,7 @@ bp = Blueprint('bp_settings', __name__)
 @bp.route('/settings')
 @login_required
 @selected_character_required
+@is_alive_required
 def settings_get():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
@@ -30,6 +30,7 @@ def settings_get():
 @bp.route('/settings/name', methods=['POST'])
 @login_required
 @selected_character_required
+@is_alive_required
 def change_name():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
@@ -59,9 +60,9 @@ def change_name():
 @bp.route('/settings/email', methods=['POST'])
 @login_required
 @selected_character_required
+@is_free_true_required
+@is_alive_required
 def change_email():
-    if current_user.is_free == "false":
-        return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
     email_form = ChangeEmailForm()
 
@@ -86,9 +87,9 @@ def change_email():
 @bp.route('/settings/password', methods=['POST'])
 @login_required
 @selected_character_required
+@is_free_true_required
+@is_alive_required
 def change_password():
-    if current_user.is_free == "false":
-        return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
     password_form = ChangePasswordForm()
 

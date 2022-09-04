@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 
 from ..app import db
 
-from ..decorators import selected_character_required
+from ..decorators import selected_character_required, is_free_true_required, is_alive_required
 
 bp = Blueprint('bp_shop', __name__)
 
@@ -39,9 +39,9 @@ class Buttons:
 @bp.route('/shop')
 @login_required
 @selected_character_required
+@is_free_true_required
+@is_alive_required
 def shop_get():
-    if current_user.is_free == "false":
-        return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
     cost = Cost(current_user)
     buttons = Buttons()
@@ -62,9 +62,9 @@ def shop_get():
 @bp.route('/shop/heal')
 @login_required
 @selected_character_required
+@is_free_true_required
+@is_alive_required
 def heal():
-    if current_user.is_free == "false":
-        return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
     cost = Cost(current_user)
     if current_user.current_health >= current_user.max_health:
@@ -85,9 +85,9 @@ def heal():
 @bp.route('/shop/upgrade_weapon')
 @login_required
 @selected_character_required
+@is_free_true_required
+@is_alive_required
 def upgrade_weapon():
-    if current_user.is_free == "false":
-        return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
     cost = Cost(current_user)
 
@@ -105,9 +105,9 @@ def upgrade_weapon():
 @bp.route('/shop/upgrade_armor')
 @login_required
 @selected_character_required
+@is_free_true_required
+@is_alive_required
 def upgrade_armor():
-    if current_user.is_free == "false":
-        return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
     cost = Cost(current_user)
     if current_user.money >= cost.upgrade_armor:
@@ -124,9 +124,10 @@ def upgrade_armor():
 @bp.route('/shop/upgrade_ship')
 @login_required
 @selected_character_required
+@is_free_true_required
+@is_alive_required
 def upgrade_ship():
-    if current_user.is_free == "false":
-        return redirect(url_for('bp_mission.set_mission', mission_type=1))
+
     cost = Cost(current_user)
     if current_user.money >= cost.upgrade_ship:
         current_user.money -= cost.upgrade_ship

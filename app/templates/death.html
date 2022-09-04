@@ -42,7 +42,7 @@
         <div class="progress">
             <div class="progress-bar progress-bar-striped bg-success" id="current_progress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-duration="{{ duration }}" data-timeleft="{{ time_left }}"></div>
         </div>
-        <a href="{{ url_for('bp_bar.bar_get') }}" id="link_completed">
+        <a href="{{ url_for('bp_game.character_get') }}" id="link_completed">
             <button type="submit" class="btn btn-outline-success" id="button_completed">Revive</button>
         </a>
     </div>
@@ -83,7 +83,7 @@
 
                 progress.text(width.toFixed(2) + '%'); // set progress text
 
-                document.getElementById("time_left_text").innerText = "Time left: " + remaining.toFixed(0);
+                document.getElementById("time_left_text").innerText = "Time left: " + fancyTimeFormat(remaining.toFixed(0));
 
                 if(width >= 100)
                 {
@@ -102,6 +102,24 @@
                 }
             }
     });
+     function fancyTimeFormat(duration)
+    {
+    // Hours, minutes and seconds
+    let hrs = ~~(duration / 3600);
+    let mins = ~~((duration % 3600) / 60);
+    let secs = ~~duration % 60;
+
+    // Output like "1:01" or "4:03:59" or "123:03:59"
+    let ret = "";
+
+    if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+    }
+
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs;
+    return ret;
+    }
     {% endraw %}
 </script>
 

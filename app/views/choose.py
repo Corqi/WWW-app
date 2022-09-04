@@ -9,7 +9,7 @@ bp = Blueprint('bp_choose', __name__)
 @bp.route('/choose')
 @login_required
 def choose_get():
-    if current_user.level == 0:
+    if current_user.character_type == 0:
         return render_template('choose.html')
     return redirect(url_for('bp_game.character_get'))
 
@@ -17,14 +17,14 @@ def choose_get():
 @bp.route('/choose/<character_no>')
 @login_required
 def select_character(character_no):
-    if current_user.level == 0:
+    if current_user.character_type == 0:
         try:
             character_no = int(character_no)
         except:
             return redirect(url_for("bp_choose.choose_get"))
 
         if 0 < character_no < 4:
-            current_user.level = character_no
+            current_user.character_type = character_no
             db.session.commit()
             return redirect(url_for("bp_game.character_get"))
 

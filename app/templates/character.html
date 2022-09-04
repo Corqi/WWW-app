@@ -49,6 +49,16 @@
         height: auto;
     }
 
+    #health_text{
+        display: inline;
+        color: #ff0031;
+    }
+
+    #money_text{
+        display: inline;
+        color: #46ff00;
+    }
+
     .characterStatsBox{
         border-style: solid;
         border-radius: 25px;
@@ -101,9 +111,14 @@
         <div class="card-header">
             <h5 class="card-title">{{ character.name }}</h5>  
         </div>
-        <div class="card-body">
-            <p class="card-text">Health: {{ character.current_health }}/{{ character.max_health }} HP</p>
-            <p class="card-text">Money: {{ character.money }} Credits</p>
+        <div class="card-body" id="data" data-damage_taken="{{ damage_taken }}" data-money_earned="{{ money_earned }}">
+            <p class="card-text" style="display:inline">Health: {{ character.current_health }}/{{ character.max_health }}</p>
+            <p class="card-text" id="health_text"></p>
+            <p class="card-text" style="display:inline"> HP</p>
+            <p></p>
+            <p class="card-text" style="display:inline">Money: {{ character.money }}</p>
+            <p class="card-text" id="money_text"></p>
+            <p class="card-text" style="display:inline"> Credits</p>
         </div>
     </div>
 
@@ -162,4 +177,26 @@
         <p>Luck: {{ character.luck }}</p>
     </div> -->
 </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<script>
+    {% raw %}
+    $().ready(function() {
+        let data = $('#data');
+        let damage_taken = data.data('damage_taken');
+        let money_earned = data.data('money_earned');
+        if(damage_taken > 0)
+        {
+            document.getElementById("health_text").innerText = "(-" + damage_taken + ")";
+        }
+        if(money_earned > 0)
+        {
+            document.getElementById("money_text").innerText = "(+" + money_earned + ")";
+        }
+    });
+    {% endraw %}
+</script>
+
 {% endblock content %}

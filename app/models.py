@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     chat_messages = db.relationship('Message', back_populates="user", lazy=True)
     mission_handler = db.relationship('MissionHandler', back_populates="user")
     is_free = db.Column(db.String(5), default="true")
+    last_death_time = db.Column(db.DateTime)
 
     def __init__(self, email, password, name):
         self.email = email

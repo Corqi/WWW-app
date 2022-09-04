@@ -5,7 +5,7 @@ from ..app import db
 import datetime
 from flask_login import login_required, current_user
 from ..models import Mission, User, MissionHandler
-from ..decorators import selected_character_required
+from ..decorators import selected_character_required, is_alive_required
 
 bp = Blueprint('bp_mission', __name__)
 
@@ -13,6 +13,7 @@ bp = Blueprint('bp_mission', __name__)
 @bp.route('/mission/<int:mission_type>')
 @login_required
 @selected_character_required
+@is_alive_required
 def set_mission(mission_type):
     mission_handler = MissionHandler.query.filter_by(user_id=current_user.id).first()
     if current_user.is_free == "true":

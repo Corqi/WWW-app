@@ -5,7 +5,7 @@ from ..app import db
 import datetime
 from flask_login import login_required, current_user
 from ..models import Mission, User, MissionHandler
-from ..decorators import selected_character_required
+from ..decorators import selected_character_required, is_free_true_required
 
 bp = Blueprint('bp_death', __name__)
 
@@ -13,46 +13,21 @@ bp = Blueprint('bp_death', __name__)
 @bp.route('/death')
 @login_required
 @selected_character_required
+@is_free_true_required
 def get_death():
-    return render_template('death.html')
-# def set_mission(mission_type):
-#     mission_handler = MissionHandler.query.filter_by(user_id=current_user.id).first()
-#     if current_user.is_free == "true":
-#         current_user.is_free = "false"
-#         mission_handler.mission_picked_id = mission_type
-#         mission_handler.mission_taken_time = datetime.datetime.now()
-#         db.session.commit()
+    if current_user.current_health <= 0:
+        duration = 30
+        death_time = current_user.last_death_time
+        end_time = death_time + datetime.timedelta(seconds=duration)
 
-#         if mission_type == 1:
-#             duration = mission_handler.easy_mission_duration
-#         elif mission_type == 2:
-#             duration = mission_handler.medium_mission_duration
-#         else:
-#             duration = mission_handler.hard_mission_duration
+        if datetime.datetime.now() >= end_time:
+            time_left = 0
+        else:
+            time_left = end_time - datetime.datetime.now()
+            time_left = time_left.total_seconds()
 
-#         start_time = mission_handler.mission_taken_time
-#         end_time = start_time + datetime.timedelta(seconds=duration)
-#         time_left = end_time - start_time
-#         time_left = time_left.total_seconds()
+        return render_template('death.html', duration=duration, time_left=time_left)
+    else:
+        return redirect(url_for('bp_game.character_get'))
 
-#         return render_template('mission.html', duration=duration, time_left=time_left)
 
-#     else:
-#         m_type = mission_handler.mission_picked_id
-#         if m_type == 1:
-#             duration = mission_handler.easy_mission_duration
-#         elif m_type == 2:
-#             duration = mission_handler.medium_mission_duration
-#         else:
-#             duration = mission_handler.hard_mission_duration
-
-#         start_time = mission_handler.mission_taken_time
-#         end_time = start_time + datetime.timedelta(seconds=duration)
-
-#         if datetime.datetime.now() >= end_time:
-#             time_left = 0
-#         else:
-#             time_left = end_time - datetime.datetime.now()
-#             time_left = time_left.total_seconds()
-
-#         return render_template('mission.html', duration=duration, time_left=time_left)

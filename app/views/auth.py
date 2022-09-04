@@ -12,10 +12,6 @@ bp = Blueprint('bp_auth', __name__)
 
 @bp.route('/', methods=['POST', 'GET'])
 def login_get():
-
-    if current_user.is_authenticated:
-        return redirect(url_for("bp_game.character_get"))
-
     form = LoginForm()
     if form.validate_on_submit():
         email = form.email.data
@@ -43,9 +39,6 @@ def logout_get():
 
 @bp.route('/register', methods=['POST', 'GET'])
 def register_get():
-    if current_user.is_authenticated:
-        return redirect(url_for("bp_game.character_get"))
-
     form = RegisterForm()
     if form.validate_on_submit():
         email = form.email.data

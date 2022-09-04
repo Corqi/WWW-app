@@ -5,7 +5,7 @@ from ..app import db
 import datetime
 from flask_login import login_required, current_user
 from ..models import Mission, User, MissionHandler
-from ..decorators import selected_character_required
+from ..decorators import selected_character_required, is_free_true_required, is_alive_required
 
 bp = Blueprint('bp_bar', __name__)
 
@@ -13,6 +13,8 @@ bp = Blueprint('bp_bar', __name__)
 @bp.route('/bar')
 @login_required
 @selected_character_required
+@is_free_true_required
+@is_alive_required
 def bar_get():
     # obj1 = Mission(title="misjalatwa1", content="ale mega prosta", danger_level=1)
     # obj2 = Mission(title="misjasrednia1", content="ale mega srednia", danger_level=2)
@@ -27,38 +29,9 @@ def bar_get():
     last_missions_update = mission_handler.last_missions_update
     time_difference = datetime.datetime.now() - last_missions_update
 
-    if current_user.is_free == "false":
-        start_time = mission_handler.mission_taken_time
-        if mission_handler.mission_picked_id == 1:
-            end_time = start_time + datetime.timedelta(seconds=mission_handler.easy_mission_duration)
-        elif mission_handler.mission_picked_id == 2:
-            end_time = start_time + datetime.timedelta(seconds=mission_handler.medium_mission_duration)
-        else:
-            end_time = start_time + datetime.timedelta(seconds=mission_handler.hard_mission_duration)
-
-        # here player receives money and damage after completing mission
-        if datetime.datetime.now() >= end_time:
-            current_user.is_free = "true"
-            if mission_handler.mission_picked_id == 1:
-                current_user.money += mission_handler.easy_mission_cost
-                random_damage = random.randint(0, 10)
-            elif mission_handler.mission_picked_id == 2:
-                current_user.money += mission_handler.medium_mission_cost
-                random_damage = random.randint(11, 20)
-            else:
-                current_user.money += mission_handler.hard_mission_cost
-                random_damage = random.randint(21, 30)
-
-            current_user.current_health -= random_damage - calculate_damage_reduction(random_damage)
-            mission_handler.mission_picked_id = 0
-            db.session.commit()
-        else:
-            return redirect(url_for('bp_mission.set_mission', mission_type=1))
-
-    if (current_user.is_free == "true" and time_difference.total_seconds()/60 > 1
-        and mission_handler.mission_picked_id == 0)\
-            or current_user.is_free == "true":
-        mission_handler.mission_picked_id = 0
+    if (current_user.is_free == "true" and (time_difference.total_seconds() / 60 > 1
+                                            or mission_handler.mission_picked_id == 0)):
+        mission_handler.mission_picked_id = -1
         easy_missions = Mission.query.filter_by(danger_level=1).all()
         medium_missions = Mission.query.filter_by(danger_level=2).all()
         hard_missions = Mission.query.filter_by(danger_level=3).all()
@@ -137,15 +110,15 @@ def bar_get():
 
 
 def calculate_cost_increase(cost):
-    cost_increase_factor = current_user.luck - 1
-    return int(cost * 0.2 * cost_increase_factor)
+    cost_increase_factor = min(current_user.luck - 1, 10)
+    return int(cost * 0.1 * cost_increase_factor)
 
 
 def calculate_duration_reduction(duration):
-    duration_reduction_factor = current_user.speed - 1
-    return int(duration * 0.2 * duration_reduction_factor)
+    duration_reduction_factor = min(current_user.speed - 1, 5)
+    return int(duration * 0.1 * duration_reduction_factor)
 
 
 def calculate_damage_reduction(damage):
-    damage_reduction_factor = current_user.armor - 1
-    return int(damage * 0.15 * damage_reduction_factor)
+    damage_reduction_factor = min(current_user.armor - 1, 6)
+    return int(damage * 0.1 * damage_reduction_factor)

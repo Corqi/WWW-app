@@ -8,6 +8,34 @@
         background-image: url("{{url_for('static', filename='character_bg.png')}}");
     }
 
+    #leftCharacterBox{
+        height: 100%;
+        text-align: center;
+
+        padding-top: 2%;
+    }
+
+    #image{
+        padding: 0;
+        height: 100%;
+
+        margin-top: auto;
+        margin-bottom: 0;
+        overflow: hidden;
+
+        display: flex;
+    }
+
+    #spriteCharacter{
+        width: auto;
+        height: 100%;
+
+        margin-right: auto;
+        margin-left: auto;
+
+        object-fit: cover;
+    }
+
     #containerCharacter {
         border-style: solid;
         border-radius: 25px;
@@ -48,8 +76,16 @@
 {% endblock styles %}
 
 {% block content %}
-<div class="container col-6">
-    <img src="{{url_for('static', filename='character2.png')}}" alt="Character" id="spriteCharacter">
+<div class="container col-6" id="leftCharacterBox">
+    <div id="image">
+        {% if character.level == 1 %}
+            <img src="{{url_for('static', filename='character1.png')}}" alt="Character" id="spriteCharacter">
+        {% elif character.level == 2 %}
+            <img src="{{url_for('static', filename='character2.png')}}" alt="Character" id="spriteCharacter">
+        {% else %}
+            <img src="{{url_for('static', filename='character3.png')}}" alt="Character" id="spriteCharacter">
+        {% endif %}
+    </div>
 </div>
 
 <div class="container col-6">
@@ -58,7 +94,7 @@
             <h5 class="card-title">{{ character.name }}</h5>  
         </div>
         <div class="card-body">
-            <p class="card-text">Health: {{ character.currentHealth }}/{{ character.maxHealth }} HP</p>
+            <p class="card-text">Health: {{ character.current_health }}/{{ character.max_health }} HP</p>
             <p class="card-text">Money: {{ character.money }} Credits</p>
         </div>
     </div>

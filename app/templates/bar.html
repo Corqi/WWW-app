@@ -139,7 +139,7 @@
 
         <div class="card-body">
             <p class="card-text">{{ chosen_hard.content }}</p>
-            <p class="card-text">Money: {{ cost_dict['medium_cost'] }} (+{{ cost_dict['medium_increase'] }})</p>
+            <p class="card-text">Money: {{ cost_dict['hard_cost'] }} (+{{ cost_dict['hard_increase'] }})</p>
             <p class="card-text">Duration: {{ duration_dict['hard_duration'] }} (-{{ duration_dict['hard_reduction'] }})</p>
             <a href="{{ url_for('bp_mission.set_mission', mission_type=3) }}">
                 <button type="submit" class="btn btn-outline-danger">Accept</button>

@@ -1,0 +1,108 @@
+{% extends "game.html" %}
+
+{% block styles %}
+{{ super() }}
+<style>
+    /* overwrite default bg */
+    #bg{
+        background-image: url("{{url_for('static', filename='death_bg.png')}}");
+    }
+
+    #missionBox{
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+
+        background: rgb(34, 34, 34);
+        padding: 20px;
+        width: 50%;
+        min-width: 250px;
+        height: auto;
+    }
+
+    #buttonSubmit{
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        display:block;
+
+        width: 100%;
+        max-width: 200px;
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<div class="card" id="missionBox">
+    <div class="card-body">
+        <h5 class="card-title">You are dead!</h5>
+
+        <p id="time_left_text">Time left: </p>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-success" id="current_progress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-duration="{{ duration }}" data-timeleft="{{ time_left }}"></div>
+        </div>
+        <a href="{{ url_for('bp_bar.bar_get') }}" id="link_completed">
+            <button type="submit" class="btn btn-outline-success" id="button_completed">Revive</button>
+        </a>
+    </div>
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<script>
+    {% raw %}
+     $().ready(function() {
+         $('#button_completed').prop('disabled', true);
+         $('#link_completed').css('pointer-events', 'none');
+         $('#button_character').prop('disabled', true);
+         $('#link_character').css('pointer-events', 'none');
+         $('#button_shop').prop('disabled', true);
+         $('#link_shop').css('pointer-events', 'none');
+         $('#button_canteen').prop('disabled', true);
+         $('#link_canteen').css('pointer-events', 'none');
+         $('#button_settings').prop('disabled', true);
+         $('#link_settings').css('pointer-events', 'none');
+
+        let interval = setInterval(updateProgress, 1000);
+        let progress = $('#current_progress');
+        let max = 100;
+        let time = progress.data('duration');
+        let remaining = progress.data('timeleft');
+        let progress_second = max / time;
+        let current = (time - remaining)/time * 100;
+
+            function updateProgress()
+            {
+                let width = Math.min(current + progress_second, 100); // calculate width of progress bar
+                current   = width; // set current width
+                remaining     -= 1; // subtract time every second
+                progress.data('current', width.toFixed(2)); // set data-current attribute value
+
+                progress.css('width', width.toFixed(2) + '%'); // set progress bar width
+
+                progress.text(width.toFixed(2) + '%'); // set progress text
+
+                document.getElementById("time_left_text").innerText = "Time left: " + remaining.toFixed(0);
+
+                if(width >= 100)
+                {
+                    clearInterval(interval);
+                    document.getElementById("time_left_text").innerText = "Time left: 0";
+                    $('#button_completed').prop('disabled', false);
+                    $('#link_completed').css('pointer-events', 'auto');
+                    $('#button_character').prop('disabled', false);
+                    $('#link_character').css('pointer-events', 'auto');
+                    $('#button_shop').prop('disabled', false);
+                    $('#link_shop').css('pointer-events', 'auto');
+                    $('#button_canteen').prop('disabled', false);
+                    $('#link_canteen').css('pointer-events', 'auto');
+                    $('#button_settings').prop('disabled', false);
+                    $('#link_settings').css('pointer-events', 'auto');
+                }
+            }
+    });
+    {% endraw %}
+</script>
+
+{% endblock content %}

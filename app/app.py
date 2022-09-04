@@ -63,5 +63,8 @@ def create_app():
     from .views.death import bp as bp_death
     app.register_blueprint(bp_death)
 
+    from .views.select_character import bp as bp_select_character
+    app.register_blueprint(bp_select_character)
+
     # for localhost only
     app.run()

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<style>
+    #bg {
+        background-image: url("{{url_for('static', filename='main_bg.png')}}");
+        background-clip: border-box;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        
+        width: 100vw;
+        height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+{% endblock styles %}
+
+{% block body %}
+<div class="containter-fluid" id="bg">
+    <div class="container col-4">
+        <button type="button" class="btn btn-secondary" id="button_character1">Choose 1</button>
+    </div>
+    <div class="container col-4">
+        <button type="button" class="btn btn-secondary" id="button_character2">Choose 2</button>
+    </div>
+    <div class="container col-4">
+        <button type="button" class="btn btn-secondary" id="button_character3">Choose 3</button>
+    </div>
+</div>
+{% endblock body %}

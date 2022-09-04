@@ -17,7 +17,7 @@ def choose_get():
 @bp.route('/choose/<character_no>')
 @login_required
 def select_character(character_no):
-    if current_user == 0:
+    if current_user.level == 0:
         try:
             character_no = int(character_no)
         except:

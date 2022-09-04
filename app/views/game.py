@@ -17,6 +17,7 @@ def game_get():
 
 @bp.route('/character')
 @login_required
+@selected_character_required
 def character_get():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))

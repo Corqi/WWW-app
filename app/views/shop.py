@@ -3,11 +3,12 @@ from flask_login import login_required, current_user
 
 from ..app import db
 
+from ..decorators import selected_character_required
+
 bp = Blueprint('bp_shop', __name__)
 
 
 class Cost:
-    # TODO Write logic to calculate costs according to levels
     cost_dict = {'heal': 30, 'upgrade_weapon': 15, 'upgrade_armor': 15, 'upgrade_ship': 15}
 
     def __init__(self, user):
@@ -37,6 +38,7 @@ class Buttons:
 
 @bp.route('/shop')
 @login_required
+@selected_character_required
 def shop_get():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
@@ -59,6 +61,7 @@ def shop_get():
 
 @bp.route('/shop/heal')
 @login_required
+@selected_character_required
 def heal():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
@@ -81,6 +84,7 @@ def heal():
 
 @bp.route('/shop/upgrade_weapon')
 @login_required
+@selected_character_required
 def upgrade_weapon():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
@@ -100,6 +104,7 @@ def upgrade_weapon():
 
 @bp.route('/shop/upgrade_armor')
 @login_required
+@selected_character_required
 def upgrade_armor():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
@@ -118,6 +123,7 @@ def upgrade_armor():
 
 @bp.route('/shop/upgrade_ship')
 @login_required
+@selected_character_required
 def upgrade_ship():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))

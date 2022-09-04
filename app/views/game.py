@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
+from app.decorators import selected_character_required
 
 
 bp = Blueprint('bp_game', __name__)
@@ -7,6 +8,7 @@ bp = Blueprint('bp_game', __name__)
 
 @bp.route('/game')
 @login_required
+@selected_character_required
 def game_get():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))

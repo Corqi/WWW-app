@@ -2,12 +2,14 @@ from flask import Blueprint, request, jsonify, redirect, url_for
 from ..models import Message
 from ..app import db
 from flask_login import login_required, current_user
+from ..decorators import selected_character_required
 
 bp = Blueprint('bp_chat', __name__)
 
 
 @bp.route('/chat', methods=['GET'])
 @login_required
+@selected_character_required
 def chat_messages_get():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
@@ -38,6 +40,7 @@ def chat_messages_get():
 
 @bp.route('/chat', methods=['POST'])
 @login_required
+@selected_character_required
 def chat_messages_post():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))

@@ -5,12 +5,14 @@ from ..app import db
 import datetime
 from flask_login import login_required, current_user
 from ..models import Mission, User, MissionHandler
+from ..decorators import selected_character_required
 
 bp = Blueprint('bp_death', __name__)
 
 
 @bp.route('/death')
 @login_required
+@selected_character_required
 def get_death():
     return render_template('death.html')
 # def set_mission(mission_type):

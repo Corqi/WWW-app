@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<style>
+    #bg {
+        background-image: url("{{url_for('static', filename='main_bg.png')}}");
+        background-clip: border-box;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        
+        width: 100vw;
+        height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .chooseCharacterBox{
+        height: 100%;
+        text-align: center;
+        padding-top: 2%;
+    }
+
+    .containerChooseBox{
+        width: 50%;
+        min-width: 250px;
+        height: 20%;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        align-content: center;
+    }
+
+    .chooseCharacterButton{
+        border-style: solid;
+        border-radius: 25px;
+        border-color: rgb(39, 48, 57);
+        border-width: thick;
+
+        background: rgb(34, 34, 34);
+        padding: 20px;
+        
+        margin-left: auto;
+        margin-right: auto;
+
+        align-content: center;
+        width: fit-content;
+        height: fit-content;
+    }
+
+    .image{
+        height: 80%;
+        padding: 0;
+
+        margin-top: auto;
+        margin-bottom: 0;
+        overflow: hidden;
+    }
+
+    .spriteCharacter{
+        width: auto;
+        height: auto;
+
+        margin-right: auto;
+        margin-left: auto;
+
+        object-fit: cover;
+    }
+
+</style>
+{% endblock styles %}
+
+{% block body %}
+<div class="containter-fluid" id="bg">
+    <div class="container col-4 chooseCharacterBox">
+        <div class="row containerChooseBox">
+            <div class="chooseCharacterButton">
+                <a href="choose/1">
+                    <button type="button" class="btn btn-secondary" id="button_character1">Character #1</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="row image">
+            <img src="{{url_for('static', filename='character1.png')}}" alt="Character #1" class="spriteCharacter">
+        </div>
+    </div>
+
+    <div class="container col-4 chooseCharacterBox">
+        <div class="row containerChooseBox">
+            <div class="chooseCharacterButton">
+                <a href="choose/2">
+                    <button type="button" class="btn btn-secondary" id="button_character2">Character #2</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="row image">
+            <img src="{{url_for('static', filename='character2.png')}}" alt="Character #2" class="spriteCharacter">
+        </div>
+    </div>
+
+    <div class="container col-4 chooseCharacterBox">
+        <div class="row containerChooseBox">
+            <div class="chooseCharacterButton">
+                <a href="choose/3">
+                    <button type="button" class="btn btn-secondary" id="button_character3">Character #3</button>
+                </a>
+            </div>
+        </div>
+
+        <div class="row image">
+            <img src="{{url_for('static', filename='character3.png')}}" alt="Character #3" class="spriteCharacter">
+        </div>
+    </div>
+</div>
+{% endblock body %}

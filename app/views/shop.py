@@ -3,21 +3,21 @@ from flask_login import login_required, current_user
 
 from ..app import db
 
+from ..decorators import selected_character_required
+
 bp = Blueprint('bp_shop', __name__)
 
 
 class Cost:
-    # TODO Write logic to calculate costs according to levels
-    cost_dict = {'heal': 10, 'upgrade_weapon': 100, 'upgrade_armor': 1000, 'upgrade_ship': 0}
+    cost_dict = {'heal': 30, 'upgrade_weapon': 15, 'upgrade_armor': 15, 'upgrade_ship': 15}
 
-    def __init__(self):
+    def __init__(self, user):
         self.heal = self.cost_dict.get('heal')
-        self.heal_bonus = 10
-        self.upgrade_weapon = self.cost_dict.get('upgrade_weapon')
+        self.upgrade_weapon = self.cost_dict.get('upgrade_weapon') * user.luck
         self.luck_bonus = 1
-        self.upgrade_armor = self.cost_dict.get('upgrade_armor')
+        self.upgrade_armor = self.cost_dict.get('upgrade_armor') * user.armor
         self.armor_bonus = 1
-        self.upgrade_ship = self.cost_dict.get('upgrade_ship')
+        self.upgrade_ship = self.cost_dict.get('upgrade_ship') * user.speed
         self.speed_bonus = 1
 
         self.services_cost = {'heal': self.heal, 'upgrade_weapon': self.upgrade_weapon,
@@ -38,11 +38,12 @@ class Buttons:
 
 @bp.route('/shop')
 @login_required
+@selected_character_required
 def shop_get():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
-    cost = Cost()
+    cost = Cost(current_user)
     buttons = Buttons()
 
     # Setting buttons state
@@ -60,20 +61,21 @@ def shop_get():
 
 @bp.route('/shop/heal')
 @login_required
+@selected_character_required
 def heal():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
-    cost = Cost()
+    cost = Cost(current_user)
     if current_user.current_health >= current_user.max_health:
         flash('You have enough health points')
         return redirect(url_for('bp_shop.shop_get'))
 
     if current_user.money >= cost.heal:
         current_user.money -= cost.heal
-        current_user.current_health = min(current_user.current_health + cost.heal_bonus, 100)
+        current_user.current_health = 100
         db.session.commit()
-        flash('Heal message')
+        flash('You should feel better now.')
         return redirect(url_for('bp_shop.shop_get'))
 
     flash('No money message')
@@ -82,17 +84,18 @@ def heal():
 
 @bp.route('/shop/upgrade_weapon')
 @login_required
+@selected_character_required
 def upgrade_weapon():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
-    cost = Cost()
+    cost = Cost(current_user)
 
     if current_user.money >= cost.upgrade_weapon:
         current_user.money -= cost.upgrade_weapon
         current_user.luck += cost.luck_bonus
         db.session.commit()
-        flash('Upgrade weapon message')
+        flash('I upgraded your gun a bit.')
         return redirect(url_for('bp_shop.shop_get'))
 
     flash('No money message')
@@ -101,16 +104,17 @@ def upgrade_weapon():
 
 @bp.route('/shop/upgrade_armor')
 @login_required
+@selected_character_required
 def upgrade_armor():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
 
-    cost = Cost()
+    cost = Cost(current_user)
     if current_user.money >= cost.upgrade_armor:
         current_user.money -= cost.upgrade_armor
         current_user.armor += cost.armor_bonus
         db.session.commit()
-        flash('Upgrade armor message')
+        flash('I upgraded your armor a bit.')
         return redirect(url_for('bp_shop.shop_get'))
 
     flash('No money message')
@@ -119,15 +123,16 @@ def upgrade_armor():
 
 @bp.route('/shop/upgrade_ship')
 @login_required
+@selected_character_required
 def upgrade_ship():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
-    cost = Cost()
+    cost = Cost(current_user)
     if current_user.money >= cost.upgrade_ship:
         current_user.money -= cost.upgrade_ship
         current_user.speed += cost.speed_bonus
         db.session.commit()
-        flash('Upgrade ship message')
+        flash('I upgraded your spaceship a bit.')
         return redirect(url_for('bp_shop.shop_get'))
 
     flash('No money message')

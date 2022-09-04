@@ -14,7 +14,7 @@ bp = Blueprint('bp_auth', __name__)
 def login_get():
 
     if current_user.is_authenticated:
-        return redirect(url_for("bp_game.game_get"))
+        return redirect(url_for("bp_game.character_get"))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -29,7 +29,7 @@ def login_get():
             return redirect(url_for('bp_auth.login_get'))
 
         login_user(user, remember=remember)
-        return redirect(url_for('bp_game.game_get'))
+        return redirect(url_for('bp_game.character_get'))
     else:
         return render_template('login.html', form=form)
 
@@ -44,7 +44,7 @@ def logout_get():
 @bp.route('/register', methods=['POST', 'GET'])
 def register_get():
     if current_user.is_authenticated:
-        return redirect(url_for("bp_game.game_get"))
+        return redirect(url_for("bp_game.character_get"))
 
     form = RegisterForm()
     if form.validate_on_submit():

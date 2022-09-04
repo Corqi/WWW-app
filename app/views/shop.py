@@ -75,7 +75,7 @@ def heal():
         current_user.money -= cost.heal
         current_user.current_health = 100
         db.session.commit()
-        flash('Heal message')
+        flash('You should feel better now.')
         return redirect(url_for('bp_shop.shop_get'))
 
     flash('No money message')
@@ -95,7 +95,7 @@ def upgrade_weapon():
         current_user.money -= cost.upgrade_weapon
         current_user.luck += cost.luck_bonus
         db.session.commit()
-        flash('Upgrade weapon message')
+        flash('I upgraded your gun a bit.')
         return redirect(url_for('bp_shop.shop_get'))
 
     flash('No money message')
@@ -114,7 +114,7 @@ def upgrade_armor():
         current_user.money -= cost.upgrade_armor
         current_user.armor += cost.armor_bonus
         db.session.commit()
-        flash('Upgrade armor message')
+        flash('I upgraded your armor a bit.')
         return redirect(url_for('bp_shop.shop_get'))
 
     flash('No money message')
@@ -132,7 +132,7 @@ def upgrade_ship():
         current_user.money -= cost.upgrade_ship
         current_user.speed += cost.speed_bonus
         db.session.commit()
-        flash('Upgrade ship message')
+        flash('I upgraded your spaceship a bit.')
         return redirect(url_for('bp_shop.shop_get'))
 
     flash('No money message')

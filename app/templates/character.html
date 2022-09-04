@@ -72,6 +72,14 @@
         height: auto;
         width: 40%;
     }
+
+    .spriteSpaceship{
+        border-radius: 25%;
+    }
+
+    .spriteArmor{
+        border-radius: 25%;
+    }
 </style>
 {% endblock styles %}
 
@@ -105,11 +113,11 @@
         </div>
         <div class="card-body">
             {% if character.luck == 1 %}
-                <img src="{{url_for('static', filename='test.jpg')}}" alt="Weapon lvl 1" class="spriteStats">
+                <img src="{{url_for('static', filename='weapon1.png')}}" alt="Weapon lvl 1" class="spriteStats">
             {% elif character.luck == 2 %}
-                <img src="{{url_for('static', filename='test2.jpg')}}" alt="Weapon lvl 2" class="spriteStats">
+                <img src="{{url_for('static', filename='weapon2.png')}}" alt="Weapon lvl 2" class="spriteStats">
             {% else %}
-                <img src="{{url_for('static', filename='test3.png')}}" alt="Weapon lvl 3" class="spriteStats">
+                <img src="{{url_for('static', filename='weapon3.png')}}" alt="Weapon lvl 3" class="spriteStats">
             {% endif %}
         </div>
     </div>
@@ -120,11 +128,11 @@
         </div>
         <div class="card-body">
             {% if character.armor == 1 %}
-                <img src="{{url_for('static', filename='test.jpg')}}" alt="Armor lvl 1" class="spriteStats">
+                <img src="{{url_for('static', filename='armor1.png')}}" alt="Armor lvl 1" class="spriteStats spriteArmor">
             {% elif character.armor == 2 %}
-                <img src="{{url_for('static', filename='test2.jpg')}}" alt="Armor lvl 2" class="spriteStats">
+                <img src="{{url_for('static', filename='armor2.png')}}" alt="Armor lvl 2" class="spriteStats spriteArmor">
             {% else %}
-                <img src="{{url_for('static', filename='test3.png')}}" alt="Armor lvl 3" class="spriteStats">
+                <img src="{{url_for('static', filename='armor3.png')}}" alt="Armor lvl 3" class="spriteStats spriteArmor">
             {% endif %}
         </div>
     </div>
@@ -135,11 +143,11 @@
         </div>
         <div class="card-body">
             {% if character.speed == 1 %}
-                <img src="{{url_for('static', filename='test.jpg')}}" alt="Spaceship lvl 1" class="spriteStats">
+                <img src="{{url_for('static', filename='spaceship1.png')}}" alt="Spaceship lvl 1" class="spriteStats spriteSpaceship">
             {% elif character.speed == 2 %}
-                <img src="{{url_for('static', filename='test2.jpg')}}" alt="Spaceship lvl 2" class="spriteStats">
+                <img src="{{url_for('static', filename='spaceship2.png')}}" alt="Spaceship lvl 2" class="spriteStats spriteSpaceship">
             {% else %}
-                <img src="{{url_for('static', filename='test3.png')}}" alt="Spaceship lvl 3" class="spriteStats">
+                <img src="{{url_for('static', filename='spaceship3.png')}}" alt="Spaceship lvl 3" class="spriteStats spriteSpaceship">
             {% endif %}
         </div>
     </div>

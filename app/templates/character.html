@@ -78,9 +78,9 @@
 {% block content %}
 <div class="container col-6" id="leftCharacterBox">
     <div id="image">
-        {% if character.level == 1 %}
+        {% if character.character_type == 1 %}
             <img src="{{url_for('static', filename='character1.png')}}" alt="Character" id="spriteCharacter">
-        {% elif character.level == 2 %}
+        {% elif character.character_type == 2 %}
             <img src="{{url_for('static', filename='character2.png')}}" alt="Character" id="spriteCharacter">
         {% else %}
             <img src="{{url_for('static', filename='character3.png')}}" alt="Character" id="spriteCharacter">
@@ -146,7 +146,7 @@
 
     <!-- <div class="container-sm" id="containerCharacter">
         <p>Name: {{ character.name }}</p>
-        <p>Level: {{ character.level }}</p>
+        <p>Level: {{ character.character_type }}</p>
         <p>Health: {{ character.current_health }}/{{ character.max_health }}</p>
         <p>Money: {{ character.money }}</p>
         <p>Speed: {{ character.speed }}</p>

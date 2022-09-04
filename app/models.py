@@ -8,7 +8,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
-    level = db.Column(db.Integer, default=0)
+    character_type = db.Column(db.Integer, default=0)
     current_health = db.Column(db.Integer, default=100)
     max_health = db.Column(db.Integer, default=100)
     money = db.Column(db.Integer, default=10)
@@ -65,6 +65,7 @@ class MissionHandler(db.Model):
     medium_mission_duration = db.Column(db.Integer, default=60)
     hard_mission_duration = db.Column(db.Integer, default=120)
     user = db.relationship("User", back_populates="mission_handler")
+    mission_bg = db.Column(db.Integer, default=1)
 
     def __init__(self, user_id):
         self.user_id = user_id

@@ -5,7 +5,7 @@ from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
 
 from app.app import db
-from app.decorators import selected_character_required
+from app.decorators import selected_character_required, check_confirmed
 from app.models import MissionHandler
 from app.views.bar import calculate_damage_reduction
 
@@ -15,6 +15,7 @@ bp = Blueprint('bp_game', __name__)
 @bp.route('/game')
 @login_required
 @selected_character_required
+@check_confirmed
 def game_get():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
@@ -24,6 +25,7 @@ def game_get():
 @bp.route('/character')
 @login_required
 @selected_character_required
+@check_confirmed
 def character_get():
 
     if datetime.datetime.now() < current_user.last_death_time + datetime.timedelta(seconds=30):

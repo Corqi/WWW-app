@@ -8,6 +8,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
+    confirmed = db.Column(db.Boolean, nullable=False, default=False)
     character_type = db.Column(db.Integer, default=0)
     current_health = db.Column(db.Integer, default=100)
     max_health = db.Column(db.Integer, default=100)
@@ -20,10 +21,11 @@ class User(UserMixin, db.Model):
     is_free = db.Column(db.String(5), default="true")
     last_death_time = db.Column(db.DateTime)
 
-    def __init__(self, email, password, name):
+    def __init__(self, email, password, name, confirmed):
         self.email = email
         self.password = password
         self.name = name
+        self.confirmed = confirmed
 
 
 class Message(db.Model):

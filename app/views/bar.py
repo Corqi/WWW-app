@@ -5,7 +5,7 @@ from ..app import db
 import datetime
 from flask_login import login_required, current_user
 from ..models import Mission, User, MissionHandler
-from ..decorators import selected_character_required, is_free_true_required, is_alive_required
+from ..decorators import selected_character_required, is_free_true_required, is_alive_required, check_confirmed
 
 bp = Blueprint('bp_bar', __name__)
 
@@ -15,6 +15,7 @@ bp = Blueprint('bp_bar', __name__)
 @selected_character_required
 @is_free_true_required
 @is_alive_required
+@check_confirmed
 def bar_get():
     # obj1 = Mission(title="misjalatwa1", content="ale mega prosta", danger_level=1)
     # obj2 = Mission(title="misjasrednia1", content="ale mega srednia", danger_level=2)

@@ -7,7 +7,7 @@ from ..forms import ChangeNameForm, ChangeEmailForm, ChangePasswordForm
 from ..app import db
 from ..models import User
 
-from ..decorators import selected_character_required, is_free_true_required, is_alive_required
+from ..decorators import selected_character_required, is_free_true_required, is_alive_required, check_confirmed
 
 bp = Blueprint('bp_settings', __name__)
 
@@ -16,6 +16,7 @@ bp = Blueprint('bp_settings', __name__)
 @login_required
 @selected_character_required
 @is_alive_required
+@check_confirmed
 def settings_get():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
@@ -31,6 +32,7 @@ def settings_get():
 @login_required
 @selected_character_required
 @is_alive_required
+@check_confirmed
 def change_name():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
@@ -62,6 +64,7 @@ def change_name():
 @selected_character_required
 @is_free_true_required
 @is_alive_required
+@check_confirmed
 def change_email():
 
     email_form = ChangeEmailForm()
@@ -89,6 +92,7 @@ def change_email():
 @selected_character_required
 @is_free_true_required
 @is_alive_required
+@check_confirmed
 def change_password():
 
     password_form = ChangePasswordForm()

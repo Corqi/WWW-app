@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, redirect, url_for
 from ..models import Message
 from ..app import db
 from flask_login import login_required, current_user
-from ..decorators import selected_character_required, is_free_true_required, is_alive_required
+from ..decorators import selected_character_required, is_free_true_required, is_alive_required, check_confirmed
 
 bp = Blueprint('bp_chat', __name__)
 
@@ -12,6 +12,7 @@ bp = Blueprint('bp_chat', __name__)
 @selected_character_required
 @is_free_true_required
 @is_alive_required
+@check_confirmed
 def chat_messages_get():
     if current_user.is_free == "false":
         return redirect(url_for('bp_mission.set_mission', mission_type=1))

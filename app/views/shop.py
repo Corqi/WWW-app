@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 
 from ..app import db
 
-from ..decorators import selected_character_required, is_free_true_required, is_alive_required
+from ..decorators import selected_character_required, is_free_true_required, is_alive_required, check_confirmed
 
 bp = Blueprint('bp_shop', __name__)
 
@@ -41,6 +41,7 @@ class Buttons:
 @selected_character_required
 @is_free_true_required
 @is_alive_required
+@check_confirmed
 def shop_get():
 
     cost = Cost(current_user)
@@ -64,6 +65,7 @@ def shop_get():
 @selected_character_required
 @is_free_true_required
 @is_alive_required
+@check_confirmed
 def heal():
 
     cost = Cost(current_user)
@@ -87,6 +89,7 @@ def heal():
 @selected_character_required
 @is_free_true_required
 @is_alive_required
+@check_confirmed
 def upgrade_weapon():
 
     cost = Cost(current_user)
@@ -107,6 +110,7 @@ def upgrade_weapon():
 @selected_character_required
 @is_free_true_required
 @is_alive_required
+@check_confirmed
 def upgrade_armor():
 
     cost = Cost(current_user)
@@ -126,6 +130,7 @@ def upgrade_armor():
 @selected_character_required
 @is_free_true_required
 @is_alive_required
+@check_confirmed
 def upgrade_ship():
 
     cost = Cost(current_user)

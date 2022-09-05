@@ -5,7 +5,7 @@ from ..app import db
 import datetime
 from flask_login import login_required, current_user
 from ..models import Mission, User, MissionHandler
-from ..decorators import selected_character_required, is_free_true_required
+from ..decorators import selected_character_required, is_free_true_required, check_confirmed
 
 bp = Blueprint('bp_death', __name__)
 
@@ -14,6 +14,7 @@ bp = Blueprint('bp_death', __name__)
 @login_required
 @selected_character_required
 @is_free_true_required
+@check_confirmed
 def get_death():
     if current_user.current_health <= 0:
         duration = 30

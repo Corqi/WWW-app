@@ -2,15 +2,25 @@ from flask import Flask
 from werkzeug.debug import DebuggedApplication
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_mail import Mail
 
 db = SQLAlchemy()
-
+mail = Mail()
 
 def create_app():
     # Create and configure the app
     app = Flask(__name__,
                 instance_relative_config=False
                 )
+
+    # mail_settings = {
+    #     "MAIL_SERVER": 'smtp.gmail.com',
+    #     "MAIL_PORT": 465,
+    #     "MAIL_USE_TLS": False,
+    #     "MAIL_USE_SSL": True,
+    #     "MAIL_USERNAME": 'flaskwwwapp@gmail.com',
+    #     "MAIL_PASSWORD": 'flask1234'
+    # }
     
     # Load config from file config.py
     app.config.from_pyfile('config.py')
@@ -23,6 +33,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = (f"mysql://{app.config['DB_USER']}:{app.config['DB_PASSWORD']}"
                                              f"@{app.config['DB_HOST']}/{app.config['DB_NAME']}")
     db.init_app(app)
+    mail.init_app(app)
 
     login_manager = LoginManager()
     login_manager.login_view = 'bp_auth.login_get'

@@ -32,6 +32,7 @@ def character_get():
         return redirect(url_for('bp_death.get_death'))
     elif current_user.current_health <= 0:
         current_user.current_health = current_user.max_health
+        db.session.commit()
 
     mission_handler = MissionHandler.query.filter_by(user_id=current_user.id).first()
 

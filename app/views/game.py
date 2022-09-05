@@ -21,7 +21,6 @@ def game_get():
         return redirect(url_for('bp_mission.set_mission', mission_type=1))
     return render_template('game.html')
 
-
 @bp.route('/character')
 @login_required
 @selected_character_required

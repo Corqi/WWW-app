@@ -87,7 +87,8 @@ def register_get():
         db.session.commit()
 
         session.pop('_flashes', None)
-        flash('Your account has been created you can now log in', 'info')
+        if not current_user.is_authenticated:
+            flash('Your account has been created you can now log in', 'info')
         return redirect(url_for('bp_auth.login_get'))
 
     return render_template('register.html', form=form)

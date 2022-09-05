@@ -34,7 +34,6 @@ def check_confirmed(f):
     @wraps(f)
     def function(*args, **kwargs):
         if current_user.confirmed is False:
-            # flash('Please confirm your account!')
             return redirect(url_for('bp_auth.unconfirmed'))
         return f(*args, **kwargs)
 

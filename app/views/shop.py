@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, session, flash, redirect, url_for
 from flask_login import login_required, current_user
 
 from ..app import db
@@ -70,6 +70,7 @@ def heal():
 
     cost = Cost(current_user)
     if current_user.current_health >= current_user.max_health:
+        session.pop('_flashes', None)
         flash('You have enough health points')
         return redirect(url_for('bp_shop.shop_get'))
 
@@ -77,9 +78,11 @@ def heal():
         current_user.money -= cost.heal
         current_user.current_health = 100
         db.session.commit()
+        session.pop('_flashes', None)
         flash('You should feel better now.')
         return redirect(url_for('bp_shop.shop_get'))
 
+    session.pop('_flashes', None)
     flash('No money message')
     return redirect(url_for('bp_shop.shop_get'))
 
@@ -98,9 +101,11 @@ def upgrade_weapon():
         current_user.money -= cost.upgrade_weapon
         current_user.luck += cost.luck_bonus
         db.session.commit()
+        session.pop('_flashes', None)
         flash('I upgraded your gun a bit.')
         return redirect(url_for('bp_shop.shop_get'))
 
+    session.pop('_flashes', None)
     flash('No money message')
     return redirect(url_for('bp_shop.shop_get'))
 
@@ -118,9 +123,11 @@ def upgrade_armor():
         current_user.money -= cost.upgrade_armor
         current_user.armor += cost.armor_bonus
         db.session.commit()
+        session.pop('_flashes', None)
         flash('I upgraded your armor a bit.')
         return redirect(url_for('bp_shop.shop_get'))
 
+    session.pop('_flashes', None)
     flash('No money message')
     return redirect(url_for('bp_shop.shop_get'))
 
@@ -138,8 +145,10 @@ def upgrade_ship():
         current_user.money -= cost.upgrade_ship
         current_user.speed += cost.speed_bonus
         db.session.commit()
+        session.pop('_flashes', None)
         flash('I upgraded your spaceship a bit.')
         return redirect(url_for('bp_shop.shop_get'))
 
+    session.pop('_flashes', None)
     flash('No money message')
     return redirect(url_for('bp_shop.shop_get'))

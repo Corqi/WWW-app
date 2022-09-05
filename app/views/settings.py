@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, session, flash, redirect, url_for
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -43,18 +43,22 @@ def change_name():
         if name_form.name.data != current_user.name:
             user = User.query.filter_by(name=name_form.name.data).first()
             if user:
+                session.pop('_flashes', None)
                 flash(f'Nickname already exists.', 'name_error')
                 return redirect(url_for('bp_settings.settings_get'))
 
             current_user.name = name_form.name.data
             db.session.commit()
+            session.pop('_flashes', None)
             flash(f'Your nickname has been changed', 'name_info')
             return redirect(url_for('bp_settings.settings_get'))
 
+        session.pop('_flashes', None)
         flash(f'Same nickname was given', 'name_error')
         return redirect(url_for('bp_settings.settings_get'))
 
     for item in name_form.errors.values():
+        session.pop('_flashes', None)
         flash(*item, 'name_error')
     return redirect(url_for('bp_settings.settings_get'))
 
@@ -74,15 +78,18 @@ def change_email():
         user = User.query.filter_by(email=email_form.email.data).first()
 
         if user:
+            session.pop('_flashes', None)
             flash(f'Email address already exists.', 'email_error')
             return redirect(url_for('bp_settings.settings_get'))
 
         current_user.email = email_form.email.data
         db.session.commit()
+        session.pop('_flashes', None)
         flash(f'Your email has been changed', 'email_info')
         return redirect(url_for('bp_settings.settings_get'))
 
     for item in email_form.errors.values():
+        session.pop('_flashes', None)
         flash(*item, 'email_error')
     return redirect(url_for('bp_settings.settings_get'))
 
@@ -101,12 +108,15 @@ def change_password():
         if check_password_hash(current_user.password, password_form.password.data):
             current_user.password = generate_password_hash(password_form.new_password.data, method='sha256')
             db.session.commit()
+            session.pop('_flashes', None)
             flash(f'Your password has been changed.', 'password_info')
             return redirect(url_for('bp_settings.settings_get'))
 
+        session.pop('_flashes', None)
         flash(f'The password you entered is incorrect', 'password_error')
         return redirect(url_for('bp_settings.settings_get'))
 
     for item in password_form.errors.values():
+        session.pop('_flashes', None)
         flash(*item, 'password_error')
     return redirect(url_for('bp_settings.settings_get'))

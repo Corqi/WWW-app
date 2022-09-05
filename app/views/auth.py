@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash, Markup
+from flask import Blueprint, render_template, redirect, url_for, session, flash, Markup
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -27,6 +27,7 @@ def login_get():
         user = User.query.filter_by(email=email).first()
 
         if not user or not check_password_hash(user.password, password):
+            session.pop('_flashes', None)
             flash('Please check your login details and try again.', 'error')
             return redirect(url_for('bp_auth.login_get'))
 
@@ -39,6 +40,7 @@ def login_get():
 @bp.route('/logout')
 def logout_get():
     logout_user()
+    session.pop('_flashes', None)
     flash("You've been successfully logged out.", 'info')
     return redirect(url_for('bp_auth.login_get'))
 
@@ -53,12 +55,14 @@ def register_get():
 
         user = User.query.filter_by(email=email).first()
         if user:
+            session.pop('_flashes', None)
             flash(Markup(f'Email address already exists. Go to <a href="{url_for("bp_auth.login_get")}">login page</a>.'),
                   'error')
             return redirect(url_for('bp_auth.register_get'))
 
         user = User.query.filter_by(name=name).first()
         if user:
+            session.pop('_flashes', None)
             flash(Markup(f'Nickname already exists.'), 'error')
             return redirect(url_for('bp_auth.register_get'))
 
@@ -82,6 +86,7 @@ def register_get():
         db.session.add(new_mission_handler)
         db.session.commit()
 
+        session.pop('_flashes', None)
         flash('Your account has been created you can now log in', 'info')
         return redirect(url_for('bp_auth.login_get'))
 
@@ -93,14 +98,17 @@ def confirm_email(token):
     try:
         email = confirm_token(token)
     except:
+        session.pop('_flashes', None)
         flash('The confirmation link is invalid or has expired.', 'error')
     user = User.query.filter_by(email=email).first_or_404()
     if user.confirmed:
+        session.pop('_flashes', None)
         flash('Account already confirmed. Please login.', 'info')
     else:
         user.confirmed = True
         db.session.add(user)
         db.session.commit()
+        session.pop('_flashes', None)
         flash('You have confirmed your account. Thanks!', 'info')
     return redirect(url_for('bp_auth.login_get'))
 
@@ -121,5 +129,7 @@ def resend_confirmation():
     html = render_template('activate.html', confirm_url=confirm_url)
     subject = "Please confirm your email"
     send_email(current_user.email, subject, html)
+
+    session.pop('_flashes', None)
     flash('A new confirmation email has been sent.', 'info')
     return redirect(url_for('bp_auth.unconfirmed'))

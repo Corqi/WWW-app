@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, flash, redirect, url_for, session
 from werkzeug.debug import DebuggedApplication
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -13,15 +13,6 @@ def create_app():
                 instance_relative_config=False
                 )
 
-    # mail_settings = {
-    #     "MAIL_SERVER": 'smtp.gmail.com',
-    #     "MAIL_PORT": 465,
-    #     "MAIL_USE_TLS": False,
-    #     "MAIL_USE_SSL": True,
-    #     "MAIL_USERNAME": 'flaskwwwapp@gmail.com',
-    #     "MAIL_PASSWORD": 'flask1234'
-    # }
-    
     # Load config from file config.py
     app.config.from_pyfile('config.py')
 
@@ -44,6 +35,13 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+    @login_manager.unauthorized_handler
+    def unauthorized():
+        session.pop('_flashes', None)
+        flash('Please log in to access this page!')
+        print(login_manager.blueprint_login_views)
+        return redirect(url_for('bp_auth.login_get'))
 
     with app.app_context():
         db.create_all()
@@ -76,6 +74,10 @@ def create_app():
 
     from .views.choose import bp as bp_choose
     app.register_blueprint(bp_choose)
+
+    # Register errors
+    from .views.errors import page_not_found
+    app.register_error_handler(404, page_not_found)
 
     # for localhost only
     app.run()

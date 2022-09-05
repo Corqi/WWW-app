@@ -49,6 +49,11 @@
         height: auto;
     }
 
+    #rightStatsBox{
+        height: 100%;
+        padding-top: 30px;
+    }
+
     #health_text{
         display: inline;
         color: #ff0031;
@@ -69,7 +74,7 @@
         margin-right: auto;
 
         max-width: 20rem;
-        overflow: hidden;
+        overflow-y: auto;
 
         text-align: center;
     }
@@ -106,7 +111,7 @@
     </div>
 </div>
 
-<div class="container col-6">
+<div class="container col-6" id="rightStatsBox">
     <div class="card border-secondary mb-3 characterStatsBox">
         <div class="card-header">
             <h5 class="card-title">{{ character.name }}</h5>  

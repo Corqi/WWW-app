@@ -45,6 +45,7 @@ def bar_get():
         mission_handler.easy_mission_id = chosen_easy.id
         mission_handler.medium_mission_id = chosen_medium.id
         mission_handler.hard_mission_id = chosen_hard.id
+        mission_handler.mission_bg = random.randint(1, 5)
 
         random_easy_cost = random.randint(5, 10)
         random_medium_cost = random.randint(10, 14)

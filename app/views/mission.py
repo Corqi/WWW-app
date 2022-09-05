@@ -35,7 +35,7 @@ def set_mission(mission_type):
         time_left = end_time - start_time
         time_left = time_left.total_seconds()
 
-        return render_template('mission.html', duration=duration, time_left=time_left)
+        return render_template('mission.html', duration=duration, time_left=time_left, mission_bg=mission_handler.mission_bg)
 
     else:
         m_type = mission_handler.mission_picked_id
@@ -55,4 +55,4 @@ def set_mission(mission_type):
             time_left = end_time - datetime.datetime.now()
             time_left = time_left.total_seconds()
 
-        return render_template('mission.html', duration=duration, time_left=time_left)
+        return render_template('mission.html', duration=duration, time_left=time_left, mission_bg=mission_handler.mission_bg)

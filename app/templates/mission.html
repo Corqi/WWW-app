@@ -5,7 +5,18 @@
 <style>
     /* overwrite default bg */
     #bg{
-        background-image: url("{{url_for('static', filename='mission5_bg.png')}}");
+        background-image:
+        {% if mission_bg == 1 %}
+            url("{{ url_for('static', filename='mission1_bg.png') }}");
+        {% elif mission_bg == 2 %}
+            url("{{ url_for('static', filename='mission2_bg.png') }}");
+        {% elif mission_bg == 3 %}
+            url("{{ url_for('static', filename='mission3_bg.png') }}");
+        {% elif mission_bg == 4 %}
+            url("{{ url_for('static', filename='mission4_bg.png') }}");
+        {% else %}
+            url("{{ url_for('static', filename='mission5_bg.png') }}");
+        {% endif %}
     }
 
     #missionBox{

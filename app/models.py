@@ -1,6 +1,8 @@
+from email.policy import default
+from xmlrpc.client import DateTime
 from .app import db
 import datetime
-from flask_login import UserMixin
+from flask_login import UserMixin 
 
 
 class User(UserMixin, db.Model):
@@ -18,7 +20,7 @@ class User(UserMixin, db.Model):
     chat_messages = db.relationship('Message', back_populates="user", lazy=True)
     mission_handler = db.relationship('MissionHandler', back_populates="user")
     is_free = db.Column(db.String(5), default="true")
-    last_death_time = db.Column(db.DateTime)
+    last_death_time = db.Column(db.DateTime, default=datetime.date.min)
 
     def __init__(self, email, password, name):
         self.email = email
